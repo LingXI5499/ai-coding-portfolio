@@ -1,0 +1,36 @@
+{
+  "name": "atlasflow",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "postinstall": "node scripts/copy-mediapipe.mjs",
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:live": "node scripts/live-smoke.mjs",
+    "format": "prettier --write src tests scripts *.ts *.json index.html"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "1.1.0",
+    "gsap": "3.15.0",
+    "maplibre-gl": "6.14.0",
+    "vue": "3.5.43"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.0",
+    "@types/node": "^24.0.0",
+    "@vitejs/plugin-vue": "6.0.10",
+    "prettier": "3.9.10",
+    "typescript": "6.0.3",
+    "vite": "8.3.4",
+    "vitest": "5.0.3",
+    "vue-tsc": "3.3.13"
+  }
+}

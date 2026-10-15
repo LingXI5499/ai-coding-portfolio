@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f6f5f1" />
+    <title>界面实验室 · HTML / CSS / JavaScript 可视化学习</title>
+    <meta
+      name="description"
+      content="从真实效果认识 HTML、CSS 和 JavaScript：布局、样式、交互即点即看，代码可以修改并运行。"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="upgrade.css" />
+    <link rel="stylesheet" href="handbook.css" />
+    <link rel="stylesheet" href="teaching.css" />
+    <script src="legacy.js" defer></script>
+    <script src="legacy-notes.js" defer></script>
+    <script src="lessons.js" defer></script>
+    <script src="manual-lessons.js" defer></script>
+    <script src="foundation-lessons.js" defer></script>
+    <script src="reference.js" defer></script>
+    <script src="teaching-data.js" defer></script>
+    <script src="teaching-details.js" defer></script>
+    <script src="uploaded-guide.js" defer></script>
+    <script src="teaching-ui.js" defer></script>
+    <script src="handbook-data.js" defer></script>
+    <script src="manual-ui.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#mainContent">跳到学习内容</a>
+    <noscript>请启用 JavaScript 以加载实验目录与代码运行器。</noscript>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">◈</span>
+          <div>
+            <strong>界面实验室</strong>
+            <small>THE FRONTEND LAB</small>
+          </div>
+        </div>
+        <span class="top-separator"></span>
+        <span class="top-description">每一行代码，都有看得见的答案</span>
+        <div class="top-actions">
+          <label class="search-wrap" for="search">
+            <span aria-hidden="true">⌕</span>
+            <input
+              id="search"
+              type="search"
+              placeholder="搜索课程、属性、API…"
+              autocomplete="off"
+            />
+            <kbd>/</kbd>
+          </label>
+          <button
+            id="sidebarToggle"
+            class="icon-button menu-button"
+            aria-label="打开目录"
+            aria-expanded="false"
+          >
+            ☰
+          </button>
+          <button id="roadmapBtn" class="top-link">学习路线</button>
+          <button id="referenceBtn" class="top-link">技术速查</button>
+          <button id="manualBtn" class="top-link">开发手册</button>
+          <a
+            class="top-link"
+            href="https://developer.mozilla.org/zh-CN/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            MDN 文档 ↗
+          </a>
+        </div>
+      </header>
+      <div class="main-shell">
+        <aside class="sidebar" id="sidebar" aria-label="实验目录">
+          <div class="sidebar-inner">
+            <div class="sidebar-title">
+              <span>探索目录</span>
+              <span id="countLabel">0 个实验</span>
+            </div>
+            <div class="category-filters" role="group" aria-label="筛选实验类型">
+              <button class="cat-button active" data-category="all">
+                <span>▦</span>
+                <span>全部实验</span>
+                <span id="allCount">0</span>
+              </button>
+              <button class="cat-button" data-category="layout">
+                <span>▤</span>
+                <span>网页布局</span>
+                <span id="layoutCount">0</span>
+              </button>
+              <button class="cat-button" data-category="html">
+                <span>⌗</span>
+                <span>HTML 元素</span>
+                <span id="htmlCount">0</span>
+              </button>
+              <button class="cat-button" data-category="css">
+                <span>✳</span>
+                <span>CSS 效果</span>
+                <span id="cssCount">0</span>
+              </button>
+              <button class="cat-button" data-category="js">
+                <span>⚡</span>
+                <span>JS 交互</span>
+                <span id="jsCount">0</span>
+              </button>
+              <button class="cat-button" data-category="project">
+                <span>◈</span>
+                <span>综合实战</span>
+                <span id="projectCount">0</span>
+              </button>
+              <button class="cat-button" data-category="saved">
+                <span>☆</span>
+                <span>我的收藏</span>
+                <span id="savedCount">0</span>
+              </button>
+            </div>
+            <div class="course-filters">
+              <label for="levelFilter">难度</label>
+              <select id="levelFilter">
+                <option value="all">全部难度</option>
+                <option>入门</option>
+                <option>进阶</option>
+                <option>实战</option>
+              </select>
+              <label for="moduleFilter">主题</label>
+              <select id="moduleFilter">
+                <option value="all">全部主题</option>
+              </select>
+            </div>
+            <label class="unfinished-filter">
+              <input id="unfinishedOnly" type="checkbox" />
+              只看未完成
+            </label>
+            <div class="progress-summary">
+              <div>
+                <strong>学习进度</strong>
+                <span id="progressText">0 / 0</span>
+              </div>
+              <progress id="courseProgress" max="100" value="0">0%</progress>
+              <small id="storageNotice">进度与代码草稿自动保存在此浏览器</small>
+            </div>
+            <div class="list-divider">
+              <span>实验列表</span>
+              <span id="visibleCount"></span>
+            </div>
+            <nav id="demoList" aria-label="示例列表"></nav>
+            <div class="sidebar-note">
+              <strong>学习建议</strong>
+              <p>先看画面 → 点击体验 → 改一个参数 → 再看代码。每次学会一种效果即可。</p>
+            </div>
+          </div>
+        </aside>
+        <main class="main-content" id="mainContent" tabindex="-1">
+          <section class="welcome-banner">
+            <div>
+              <span class="eyebrow">EXPLORE. EDIT. UNDERSTAND.</span>
+              <h2>把前端知识，变成你的下一件作品。</h2>
+              <p>
+                先按主线补基础，再逐条对照代码与页面：选中谁、改了什么、为什么这样排。
+              </p>
+              <div class="welcome-actions">
+                <button id="startPathBtn">从基础开始 →</button>
+                <button id="openReferenceBtn">打开技术速查 ↗</button>
+                <button id="openManualBtn">开发手册 · 项目拆解 ↗</button>
+              </div>
+            </div>
+            <div class="banner-art" aria-hidden="true">
+              <span>&lt; / &gt;</span>
+              <span>{ }</span>
+              <span>( )</span>
+            </div>
+          </section>
+          <div class="intro-line">
+            <div class="breadcrumb" id="breadcrumb">布局 / 页面结构</div>
+            <div class="jump-links">
+              <button type="button" id="previousBtn" title="上一个示例">
+                ← 上一个
+              </button>
+              <button type="button" id="nextBtn" title="下一个示例">下一个 →</button>
+            </div>
+          </div>
+          <div class="title-row">
+            <div>
+              <div class="eyebrow" id="eyebrow">
+                LAYOUT STUDIO
+                <span>·</span>
+                01
+              </div>
+              <h1 id="demoTitle">界面实验室</h1>
+              <p id="demoSubtitle">点击左侧任何实验，查看效果并修改代码。</p>
+              <div class="pill-row" id="tagList"></div>
+            </div>
+            <button
+              class="save-button"
+              id="saveButton"
+              title="收藏当前实验"
+              aria-pressed="false"
+            >
+              ☆
+              <span>收藏</span>
+            </button>
+          </div>
+          <div class="lesson-meta" id="lessonMeta"></div>
+          <section
+            id="lessonStart"
+            class="lesson-start"
+            aria-label="开始本例前先读"
+          ></section>
+          <div class="preview-card">
+            <div class="panel-header">
+              <div class="panel-heading">
+                <span class="live-dot"></span>
+                <strong>真实效果预览</strong>
+                <span class="panel-note">不是图片，可以直接点击</span>
+              </div>
+              <div class="device-switcher" role="group" aria-label="预览设备">
+                <button class="device active" data-device="pc" aria-pressed="true">
+                  ▣
+                  <span>电脑</span>
+                </button>
+                <button class="device" data-device="tablet" aria-pressed="false">
+                  ▥
+                  <span>平板</span>
+                </button>
+                <button class="device" data-device="phone" aria-pressed="false">
+                  ▯
+                  <span>手机</span>
+                </button>
+              </div>
+            </div>
+            <div class="preview-stage" id="previewStage">
+              <div class="browser-shell" id="browserShell">
+                <div class="browser-chrome">
+                  <div class="traffic">
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                  </div>
+                  <div class="browser-address">
+                    localhost / frontend-lab /
+                    <span id="pathText">demo</span>
+                  </div>
+                  <button
+                    class="browser-refresh"
+                    id="refreshBtn"
+                    title="刷新预览"
+                    aria-label="刷新预览"
+                  >
+                    ↻
+                  </button>
+                </div>
+                <iframe
+                  id="preview"
+                  title="实验效果预览"
+                  sandbox="allow-scripts allow-forms"
+                  referrerpolicy="no-referrer"
+                ></iframe>
+              </div>
+            </div>
+            <div class="preview-footer">
+              <div>
+                <span class="hint-dot">ⓘ</span>
+                <span id="previewHint">可在右边修改尺寸，再点按钮体验效果。</span>
+              </div>
+              <span id="viewportInfo">桌面预览</span>
+            </div>
+          </div>
+          <section class="code-map" id="codeMap" aria-labelledby="codeMapTitle">
+            <h2 id="codeMapTitle">代码 → 页面，一条一条对应</h2>
+            <p>
+              打开一条说明，先读含义，再点「高亮目标并测量」。写出的声明不一定是最后生效的值；下面显示当前预览的真实计算结果。修改后请先运行。
+            </p>
+            <div class="trace-toolbar" role="group" aria-label="对照源码语言">
+              <button data-trace-language="html" aria-pressed="false">
+                HTML 结构与属性
+              </button>
+              <button data-trace-language="css" aria-pressed="true">
+                CSS 声明与效果
+              </button>
+              <button data-trace-language="js" aria-pressed="false">JS 逐行导读</button>
+              <input
+                id="traceSearch"
+                type="search"
+                aria-label="搜索源码对照"
+                placeholder="筛选选择器、属性、方法…"
+              />
+              <small id="traceCount"></small>
+            </div>
+            <div id="traceList" class="trace-list"></div>
+            <button id="traceMore" class="subtle-button">继续显示后面的 16 条</button>
+            <output id="traceResult" class="trace-result" aria-live="polite">
+              打开说明并测量，查看匹配数量、计算值、宽高和占位提示。
+            </output>
+            <details class="baseline-details">
+              <summary>为什么没有写某些样式，页面也有外观？</summary>
+              <p id="baselineInfo"></p>
+              <p>
+                规范初始值、浏览器默认样式、你写的声明、当前计算值是四个不同概念。对照结果测的是当前计算值；导出会包含本例实际使用的公共样式。
+              </p>
+              <pre id="baselineCode"></pre>
+            </details>
+          </section>
+          <div class="code-card" id="codeCard">
+            <div class="code-card-header">
+              <div>
+                <strong>拆开看看，它是怎样做出来的</strong>
+                <p>代码是可以修改的；修改后点击「运行代码」，立刻更新上面的预览。</p>
+              </div>
+              <div class="code-actions">
+                <button id="wrapBtn" class="subtle-button" aria-pressed="false">
+                  自动换行
+                </button>
+                <button id="copyBtn" class="subtle-button">复制当前代码</button>
+                <button id="resetBtn" class="subtle-button">恢复原样</button>
+                <button id="downloadBtn" class="subtle-button">导出 HTML</button>
+                <button id="runBtn" class="primary-button">▶ 运行代码</button>
+              </div>
+            </div>
+            <div class="code-tabs" role="tablist" aria-label="代码类型">
+              <button
+                class="code-tab active"
+                role="tab"
+                aria-controls="editorPanel"
+                tabindex="0"
+                id="htmlTab"
+                aria-selected="true"
+                data-code="html"
+              >
+                HTML
+                <small>内容结构</small>
+              </button>
+              <button
+                class="code-tab"
+                role="tab"
+                aria-controls="editorPanel"
+                tabindex="-1"
+                id="cssTab"
+                aria-selected="false"
+                data-code="css"
+              >
+                CSS
+                <small>外观样式</small>
+              </button>
+              <button
+                class="code-tab"
+                role="tab"
+                aria-controls="editorPanel"
+                tabindex="-1"
+                id="jsTab"
+                aria-selected="false"
+                data-code="js"
+              >
+                JavaScript
+                <small>行为交互</small>
+              </button>
+              <span class="editor-tip">支持直接编辑</span>
+            </div>
+            <div id="editorPanel" role="tabpanel" aria-labelledby="htmlTab">
+              <div class="editor-toolbar">
+                <span id="draftStatus" role="status">原始示例</span>
+                <span>两空格缩进 · UTF-8</span>
+              </div>
+              <div class="editor-shell" id="editorShell">
+                <pre id="lineNumbers" aria-hidden="true">1</pre>
+                <label class="sr-only" for="codeEditor">可编辑的源代码</label>
+                <div class="editor-content">
+                  <pre id="codeHighlight" aria-hidden="true"></pre>
+                  <textarea
+                    id="codeEditor"
+                    spellcheck="false"
+                    autocapitalize="off"
+                    autocomplete="off"
+                    autocorrect="off"
+                    wrap="off"
+                    aria-describedby="editorInfo"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="editor-bottom">
+              <span>Ctrl / ⌘ + Enter 运行 · Tab 缩进 · Esc 离开编辑器</span>
+              <span id="editorInfo">HTML · 0 行</span>
+            </div>
+          </div>
+          <details class="shared-styles">
+            <summary>预览还用了哪些公共样式？</summary>
+            <p>
+              当前实验实际需要的公共层和参数变量在这里。基础组不注入公共装饰；变量只有被
+              var() 读取时才影响效果。导出包含实际运行所需的样式。
+            </p>
+            <button id="copyBase" class="subtle-button">复制公共 CSS</button>
+            <pre id="baseStyles"></pre>
+          </details>
+          <section class="console-panel" aria-label="运行控制台">
+            <div>
+              <strong>运行控制台</strong>
+              <span id="runStatus" role="status">准备运行</span>
+              <button id="clearConsole">清空</button>
+            </div>
+            <pre id="consoleOutput" aria-live="polite">
+这里会显示 console.log 和 JavaScript 错误。</pre>
+          </section>
+          <section class="lesson-reading" aria-label="课程讲解">
+            <div class="reading-heading">
+              <span class="eyebrow">UNDERSTAND THE WHY</span>
+              <h2>看懂原理，再动手改变。</h2>
+            </div>
+            <div id="lessonExplanation"></div>
+            <div class="practice-card">
+              <span class="section-kicker">动手练习</span>
+              <p id="practicePrompt"></p>
+              <details id="practiceHelp">
+                <summary>需要一点提示？</summary>
+                <p id="practiceHint"></p>
+              </details>
+            </div>
+            <form id="quizForm" class="quiz-card">
+              <fieldset id="quizOptions"></fieldset>
+              <button class="primary-button" type="submit">检查答案</button>
+              <p id="quizFeedback" role="status"></p>
+            </form>
+            <div class="lesson-navigation">
+              <button id="completeNext" class="primary-button">
+                标记完成，进入下一课 →
+              </button>
+              <button id="shareLesson" class="subtle-button">复制课程链接</button>
+            </div>
+          </section>
+          <section class="bottom-learning">
+            <div>
+              <span class="bottom-icon">01</span>
+              <strong>认识效果</strong>
+              <p>先看它长什么样。</p>
+            </div>
+            <div>
+              <span class="bottom-icon">02</span>
+              <strong>动手试试</strong>
+              <p>点击按钮、拖动尺寸。</p>
+            </div>
+            <div>
+              <span class="bottom-icon">03</span>
+              <strong>理解做法</strong>
+              <p>找到对应标签与属性。</p>
+            </div>
+            <div>
+              <span class="bottom-icon">04</span>
+              <strong>改出新效果</strong>
+              <p>修改代码再运行。</p>
+            </div>
+          </section>
+          <footer class="app-footer">
+            界面实验室 · 原生 HTML / CSS / JavaScript · 原创可运行案例 · 参考 MDN
+            与菜鸟教程
+          </footer>
+        </main>
+        <aside class="inspector" aria-label="当前实验说明">
+          <div class="inspector-inner">
+            <div class="inspector-head">
+              <span>实验讲解</span>
+              <span>LEARN BY DOING</span>
+            </div>
+            <section class="inspector-section">
+              <div class="section-kicker">01 / 它是什么</div>
+              <h2 id="whatTitle">一种网页布局</h2>
+              <p id="whatText"></p>
+            </section>
+            <section class="inspector-section">
+              <div class="section-kicker">02 / 用在什么地方</div>
+              <div id="useCases" class="use-cases"></div>
+            </section>
+            <section class="inspector-section">
+              <div class="section-kicker">03 / 观察重点</div>
+              <ul id="observeList" class="observe-list"></ul>
+            </section>
+            <section class="inspector-section experiment-section">
+              <div class="section-kicker">04 / 调整参数，看看变化</div>
+              <label class="control-label" for="gapControl">
+                <span>区域间距</span>
+                <output id="gapValue">16px</output>
+              </label>
+              <input id="gapControl" type="range" min="0" max="40" value="16" />
+              <label class="control-label" for="roundControl">
+                <span>卡片圆角</span>
+                <output id="roundValue">12px</output>
+              </label>
+              <input id="roundControl" type="range" min="0" max="30" value="12" />
+              <label class="control-label" for="fontControl">
+                <span>字号大小</span>
+                <output id="fontValue">15px</output>
+              </label>
+              <input id="fontControl" type="range" min="12" max="22" value="15" />
+              <div class="color-picks">
+                <span>强调色</span>
+                <button
+                  class="color-button selected"
+                  data-color="#2563eb"
+                  style="--swatch: #2563eb"
+                  aria-label="蓝色"
+                  title="蓝色"
+                ></button>
+                <button
+                  class="color-button"
+                  data-color="#0d9278"
+                  style="--swatch: #0d9278"
+                  aria-label="绿色"
+                  title="绿色"
+                ></button>
+                <button
+                  class="color-button"
+                  data-color="#ed7745"
+                  style="--swatch: #ed7745"
+                  aria-label="橙色"
+                  title="橙色"
+                ></button>
+                <button
+                  class="color-button"
+                  data-color="#8b5cf6"
+                  style="--swatch: #8b5cf6"
+                  aria-label="紫色"
+                  title="紫色"
+                ></button>
+              </div>
+              <small>这些是实验室额外提供的全局参数，部分例子受影响程度不同。</small>
+            </section>
+            <section class="inspector-section">
+              <div class="section-kicker">05 / 可以试着做</div>
+              <p id="challengeText"></p>
+              <label class="done-label">
+                <input type="checkbox" id="doneCheckbox" />
+                <span>我已理解这个实验</span>
+              </label>
+            </section>
+            <section class="inspector-section">
+              <div class="section-kicker">06 / 延伸阅读</div>
+              <a id="runoobLink" target="_blank" rel="noopener noreferrer">
+                菜鸟教程：继续学习 ↗
+              </a>
+              <br />
+              <br />
+              <a
+                id="sourceLink"
+                href="https://developer.mozilla.org/zh-CN/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                查看 MDN 官方说明 ↗
+              </a>
+            </section>
+            <section class="inspector-section">
+              <div class="section-kicker">07 / 课程出处与组合用途</div>
+              <div id="lessonProvenance"></div>
+            </section>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <div id="sidebarBackdrop" class="sidebar-backdrop" hidden></div>
+    <dialog id="learningDialog" aria-labelledby="dialogTitle">
+      <div class="dialog-header">
+        <div>
+          <span class="eyebrow">FRONTEND LAB / LIBRARY</span>
+          <h2 id="dialogTitle">学习路线</h2>
+        </div>
+        <button id="closeDialog" class="icon-button" aria-label="关闭">×</button>
+      </div>
+      <div id="dialogContent"></div>
+    </dialog>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

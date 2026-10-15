@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ app_name }}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <div>
+      <div class="eyebrow">PERSONAL INTELLIGENCE DIGEST</div>
+      <h1>{{ app_name }}</h1>
+      <p class="subtitle">每天 08:00 自动更新一次；平时保持静默，只有你点击按钮时才再次刷新。</p>
+    </div>
+    <button id="refreshBtn" class="refresh-btn" type="button">↻ 立即刷新</button>
+  </div>
+</header>
+
+<main class="shell">
+  <section class="status-card">
+    <div><span class="label">上次更新</span><strong>{{ last_update or '尚未刷新' }}</strong></div>
+    <div><span class="label">下次自动更新</span><strong>{{ next_update }}</strong></div>
+    <div><span class="label">时区</span><strong>{{ timezone }}</strong></div>
+    <div><span class="label">当前状态</span><strong id="statusText">{{ refresh_status.state }}</strong></div>
+  </section>
+
+  <section id="progressBox" class="progress-card {% if refresh_status.state != 'RUNNING' %}hidden{% endif %}">
+    <div class="progress-head"><strong>刷新进度</strong><span id="progressMessage">{{ refresh_status.message }}</span></div>
+    <div id="sourceProgress" class="source-progress"></div>
+  </section>
+
+  <section class="hero-report">
+    <div class="section-title-row">
+      <div>
+        <div class="eyebrow dark">DEEPSEEK DAILY BRIEF</div>
+        <h2>今日摘要</h2>
+      </div>
+      {% if report %}<span class="pill">{{ report.trigger_type }} · {{ report.generated_at }}</span>{% endif %}
+    </div>
+    {% if report %}
+      <article class="report-content">{{ report.content }}</article>
+    {% else %}
+      <div class="empty">当前还没有日报。首次使用请点击“立即刷新”，以后服务器保持运行时每天 08:00 会自动更新。</div>
+    {% endif %}
+  </section>
+
+  <div class="grid two">
+    <section class="panel">
+      <div class="section-title-row"><h2>🤖 AI / 编程</h2><span class="count">{{ ai_programming|length }}</span></div>
+      <div class="list">
+        {% for item in ai_programming %}
+        <a class="item" href="{{ item.url }}" target="_blank" rel="noopener noreferrer">
+          <span class="rank">{{ loop.index }}</span>
+          <span class="item-body"><strong>{{ item.title }}</strong><small>{{ item.source }}{% if item.summary %} · {{ item.summary[:90] }}{% endif %}</small></span>
+        </a>
+        {% else %}<div class="empty small-empty">暂无数据</div>{% endfor %}
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title-row"><h2>🔥 社会热点</h2><span class="count">{{ social_hot|length }}</span></div>
+      <div class="list">
+        {% for item in social_hot %}
+        <a class="item" href="{{ item.url }}" target="_blank" rel="noopener noreferrer">
+          <span class="rank hot">{{ loop.index }}</span>
+          <span class="item-body"><strong>{{ item.title }}</strong><small>{{ item.source }}</small></span>
+        </a>
+        {% else %}<div class="empty small-empty">暂无数据</div>{% endfor %}
+      </div>
+    </section>
+  </div>
+
+  <div class="grid two">
+    <section class="panel">
+      <div class="section-title-row"><h2>📜 国家政策</h2><span class="count">{{ policy|length }}</span></div>
+      <div class="list">
+        {% for item in policy %}
+        <a class="item" href="{{ item.url }}" target="_blank" rel="noopener noreferrer">
+          <span class="rank policy">{{ loop.index }}</span>
+          <span class="item-body"><strong>{{ item.title }}</strong><small>{{ item.source }}</small></span>
+        </a>
+        {% else %}<div class="empty small-empty">暂无数据</div>{% endfor %}
+      </div>
+    </section>
+
+    <section class="panel jobs-panel">
+      <div class="section-title-row"><h2>💼 秋招雷达</h2><span class="count">{{ jobs|length }}</span></div>
+      <div class="list">
+        {% for item in jobs %}
+        <a class="item" href="{{ item.url }}" target="_blank" rel="noopener noreferrer">
+          <span class="rank job">{{ loop.index }}</span>
+          <span class="item-body"><strong>{{ item.company }} · {{ item.title }}</strong><small>{{ item.location or '地点未注明' }}{% if item.batch %} · {{ item.batch }}{% endif %}</small></span>
+        </a>
+        {% else %}<div class="empty small-empty">暂无数据</div>{% endfor %}
+      </div>
+    </section>
+  </div>
+</main>
+
+<div id="toast" class="toast hidden"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "profile": {
+    "fullName": "示例同学",
+    "phone": "13800000000",
+    "email": "demo@example.com",
+    "github": {
+      "label": "GitHub",
+      "url": "https://github.com/example"
+    },
+    "website": {
+      "label": "个人网站",
+      "url": "https://example.com"
+    },
+    "photoAsset": "/assets/resume-photo.png"
+  },
+  "jobIntent": "Java 后端开发工程师",
+  "education": {
+    "school": "示例大学",
+    "major": "计算机科学与技术",
+    "degree": "本科",
+    "period": "2022.09 — 2026.06",
+    "courses": "数据结构、操作系统、计算机网络、数据库原理"
+  },
+  "skills": [
+    {
+      "id": "skill-1",
+      "label": "Java",
+      "content": "掌握 Java 基础、集合、异常处理与面向对象设计。"
+    },
+    {
+      "id": "skill-2",
+      "label": "Web",
+      "content": "了解 HTTP、HTML、CSS、JavaScript 与常见接口交互。"
+    },
+    {
+      "id": "skill-3",
+      "label": "数据库",
+      "content": "熟悉 SQL 查询、索引、事务以及基础的数据建模。"
+    },
+    {
+      "id": "skill-4",
+      "label": "工程实践",
+      "content": "使用 Git 管理版本，能够编写测试并排查常见问题。"
+    }
+  ],
+  "internship": {
+    "enabled": false,
+    "organization": "",
+    "project": "",
+    "role": "",
+    "period": "",
+    "techStack": "",
+    "bullets": []
+  },
+  "projects": [
+    {
+      "id": "project-1",
+      "title": "示例任务管理系统",
+      "period": "2026.01 — 2026.03",
+      "techStack": "Java · Spring Boot · MyBatis · MySQL",
+      "descriptor": "虚构演示项目，仅用于展示简历排版与编辑功能。",
+      "links": [
+        {
+          "id": "project-1-link-1",
+          "label": "源码",
+          "url": "https://example.com/project-1"
+        },
+        {
+          "id": "project-1-link-2",
+          "label": "源码",
+          "url": "https://example.com/project-1"
+        }
+      ],
+      "bullets": [
+        {
+          "id": "project-1-bullet-1",
+          "label": "功能1",
+          "content": "完成基础信息维护与条件查询，使用分页展示结果。"
+        },
+        {
+          "id": "project-1-bullet-2",
+          "label": "功能2",
+          "content": "划分接口、业务和数据访问层，保持模块职责清晰。"
+        },
+        {
+          "id": "project-1-bullet-3",
+          "label": "功能3",
+          "content": "通过参数校验和统一异常处理提供清晰的错误反馈。"
+        },
+        {
+          "id": "project-1-bullet-4",
+          "label": "功能4",
+          "content": "使用事务维护关联数据的一致性，并验证失败回滚。"
+        },
+        {
+          "id": "project-1-bullet-5",
+          "label": "功能5",
+          "content": "为关键业务编写测试，覆盖正常流程与边界情况。"
+        },
+        {
+          "id": "project-1-bullet-6",
+          "label": "功能6",
+          "content": "整理本地运行配置，使用 Git 记录每次功能变更。"
+        }
+      ]
+    },
+    {
+      "id": "project-2",
+      "title": "示例图书管理系统",
+      "period": "2026.01 — 2026.03",
+      "techStack": "Java · Spring Boot · MyBatis · MySQL",
+      "descriptor": "虚构演示项目，仅用于展示简历排版与编辑功能。",
+      "links": [
+        {
+          "id": "project-2-link-1",
+          "label": "源码",
+          "url": "https://example.com/project-2"
+        }
+      ],
+      "bullets": [
+        {
+          "id": "project-2-bullet-1",
+          "label": "功能1",
+          "content": "完成基础信息维护与条件查询，使用分页展示结果。"
+        },
+        {
+          "id": "project-2-bullet-2",
+          "label": "功能2",
+          "content": "划分接口、业务和数据访问层，保持模块职责清晰。"
+        },
+        {
+          "id": "project-2-bullet-3",
+          "label": "功能3",
+          "content": "通过参数校验和统一异常处理提供清晰的错误反馈。"
+        },
+        {
+          "id": "project-2-bullet-4",
+          "label": "功能4",
+          "content": "使用事务维护关联数据的一致性，并验证失败回滚。"
+        },
+        {
+          "id": "project-2-bullet-5",
+          "label": "功能5",
+          "content": "为关键业务编写测试，覆盖正常流程与边界情况。"
+        },
+        {
+          "id": "project-2-bullet-6",
+          "label": "功能6",
+          "content": "整理本地运行配置，使用 Git 记录每次功能变更。"
+        }
+      ]
+    }
+  ],
+  "honors": [
+    {
+      "id": "honor-1",
+      "content": "示例荣誉 1（演示占位）"
+    },
+    {
+      "id": "honor-2",
+      "content": "示例荣誉 2（演示占位）"
+    }
+  ],
+  "settings": {
+    "density": "compact",
+    "sectionOrder": [
+      "education",
+      "skills",
+      "internship",
+      "projects",
+      "honors"
+    ],
+    "showHonors": true
+  },
+  "meta": {
+    "source": "公开演示用虚构资料",
+    "notes": "所有经历、学校和联系方式均为演示占位。"
+  }
+}

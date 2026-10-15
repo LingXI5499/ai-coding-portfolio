@@ -1,0 +1,22 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.mp4 binary
+*.mp3 binary
+*.wav binary
+*.task binary
+*.ttf binary
+*.woff2 binary
+*.fbx binary
+*.blend binary
+*.jar binary
+*.bat text eol=crlf
+# Preserve Unity-generated serialization and third-party license formatting.
+*.meta -whitespace
+*.unity -whitespace
+*.prefab -whitespace
+*.asset -whitespace
+*.mat -whitespace
+*-OFL.txt -whitespace

@@ -1,0 +1,30 @@
+{
+  "name": "musiclingxi",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "test": "node --test",
+    "check": "node scripts/check-project.mjs",
+    "lyrics:check": "node scripts/check-lyrics.mjs",
+    "lyrics:fetch": "node scripts/fetch-lyrics.mjs",
+    "media:placeholder": "node scripts/generate-placeholder-media.mjs",
+    "media:ingest": "node scripts/ingest-media.mjs",
+    "media:restore": "node scripts/restore-media.mjs",
+    "android:sync": "npm run build && npx cap sync android",
+    "android:debug": "node scripts/build-android.mjs",
+    "android:install": "powershell -ExecutionPolicy Bypass -File scripts/install-debug-apk.ps1"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.5.2",
+    "@capacitor/core": "8.5.2",
+    "capacitor-plugin-playlist": "0.11.4"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.5.2",
+    "opencc-js": "^1.4.2",
+    "vite": "8.3.0"
+  }
+}

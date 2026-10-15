@@ -1,0 +1,205 @@
+@page {
+  size: A4;
+  margin: 0;
+}
+.resume-sheet {
+  box-sizing: border-box;
+  width: 210mm;
+  height: 297mm;
+  min-height: 297mm;
+  padding: 7.4mm 10.2mm 5.5mm;
+  background: #fff;
+  color: #26384a;
+  position: relative;
+  font-family:
+    "Microsoft YaHei", "Noto Sans CJK SC", "PingFang SC", Arial, sans-serif;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.resume-sheet * {
+  box-sizing: border-box;
+}
+.resume-sheet p,
+.resume-sheet h1,
+.resume-sheet h2 {
+  margin: 0;
+}
+.resume-sheet .header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 24mm;
+  gap: 5mm;
+  min-height: 29.5mm;
+  align-items: start;
+  border-bottom: 1.05pt solid #0b4f77;
+  padding-bottom: 2.5mm;
+}
+.resume-sheet .header-main {
+  min-width: 0;
+}
+.resume-sheet .name {
+  margin-top: 0.2mm;
+  font-size: 23pt;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: 0.4mm;
+  color: #0b4f77;
+  overflow-wrap: anywhere;
+}
+.resume-sheet .contact {
+  font-size: 8.15pt;
+  line-height: 1.36;
+  margin-top: 1.6mm;
+  color: #42586a;
+  overflow-wrap: anywhere;
+}
+.resume-sheet .contact > * + *::before,
+.resume-sheet .project-meta > * + *::before {
+  content: " | ";
+  color: #7890a0;
+  white-space: pre;
+}
+.resume-sheet .intent {
+  font-size: 10.5pt;
+  line-height: 1.36;
+  margin-top: 1.2mm;
+  overflow-wrap: anywhere;
+}
+.resume-sheet strong {
+  font-weight: 700;
+  color: #1d3e55;
+}
+.resume-sheet a {
+  color: #0b5b88;
+  text-decoration: underline;
+  text-underline-offset: 1px;
+  overflow-wrap: anywhere;
+}
+.resume-photo {
+  width: 23mm;
+  height: 29.4mm;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 1.1mm;
+  justify-self: end;
+}
+.resume-sheet .section {
+  margin-top: 1.45mm;
+}
+.resume-sheet .section-title {
+  font-size: 13.7pt;
+  line-height: 1.06;
+  font-weight: 800;
+  color: #0b4f77;
+  padding-bottom: 0.7mm;
+  border-bottom: 0.7pt solid #9fb9c8;
+  margin-bottom: 1.2mm;
+}
+.resume-sheet .edu-row,
+.resume-sheet .project-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4mm;
+}
+.resume-sheet .edu-main,
+.resume-sheet .project-title {
+  min-width: 0;
+  font-size: 9.65pt;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #1d3e55;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.resume-sheet .date {
+  font-size: 8pt;
+  line-height: 1.2;
+  color: #5c7284;
+  flex-shrink: 0;
+  white-space: pre-wrap;
+  max-width: 40%;
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+.resume-sheet .body,
+.resume-sheet .skills,
+.resume-sheet .bullets {
+  font-size: 7.95pt;
+  line-height: 1.27;
+}
+.resume-sheet .body {
+  margin-top: 0.6mm;
+}
+.resume-sheet .skills p {
+  margin: 0.55mm 0;
+}
+.resume-sheet .tech {
+  font-size: 7.8pt;
+  line-height: 1.22;
+  color: #45647a;
+  margin-top: 0.45mm;
+}
+.resume-sheet .project-meta {
+  font-size: 7.85pt;
+  line-height: 1.22;
+  margin-top: 0.5mm;
+  color: #394f61;
+}
+.resume-sheet .project-block + .project-block {
+  margin-top: 1.25mm;
+}
+.resume-sheet ul.bullets {
+  margin: 0.65mm 0 0 4.2mm;
+  padding-left: 2.2mm;
+}
+.resume-sheet ul.bullets li {
+  margin: 0 0 0.45mm;
+  padding-left: 0.25mm;
+}
+.resume-sheet .honors {
+  margin: 0.3mm 0 0 4.1mm;
+  padding-left: 2.2mm;
+  font-size: 7.95pt;
+  line-height: 1.28;
+}
+.resume-sheet .honors li {
+  margin: 0.28mm 0;
+}
+.resume-sheet p,
+.resume-sheet li {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.resume-sheet.comfortable .body,
+.resume-sheet.comfortable .skills,
+.resume-sheet.comfortable .bullets,
+.resume-sheet.comfortable .honors {
+  font-size: 8.5pt;
+  line-height: 1.4;
+}
+.resume-sheet.comfortable .section {
+  margin-top: 2mm;
+}
+.print-root {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+}
+@media print {
+  html,
+  body,
+  #app {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+  }
+  .resume-sheet {
+    box-shadow: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,19 @@
+window.HANDBOOK_DOCUMENTS = window.HANDBOOK_DOCUMENTS || {};
+window.HANDBOOK_DOCUMENTS["ebabd053ce4cfebafebc"] = {
+  "id": "ebabd053ce4cfebafebc",
+  "title": "index.css",
+  "treatment": "代码或文本参考",
+  "sections": [
+    {
+      "title": "index.css",
+      "level": 1,
+      "blocks": [
+        {
+          "type": "code",
+          "language": "css",
+          "text": "* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  -webkit-font-smoothing: antialiased;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n}\nbody {\n  font-family:\n    Helvetica Neue,\n    Tahoma,\n    Arial,\n    PingFangSC-Regular,\n    Hiragino Sans GB,\n    Microsoft Yahei,\n    sans-serif;\n}\na {\n  color: #333;\n  text-decoration: none;\n}\nimg {\n  vertical-align: middle;\n  width: 100%;\n  height: 100%;\n}\nul {\n  list-style: none;\n}\n.ellipsis-2 {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  display: -webkit-box;\n  -webkit-line-clamp: 2;\n  -webkit-box-orient: vertical;\n}\n.suspension {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  z-index: 999;\n  background-color: #fff;\n  box-shadow: 0 0.53333vw 2.66667vw rgba(0, 0, 0, 0.2);\n}\n.suspension .m-navbar {\n  padding: 0 3.2vw 0 4.8vw;\n  height: 11.73333333vw;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.suspension .m-navbar .logo i {\n  font-size: 7.46666667vw;\n  color: #fb7299;\n}\n.suspension .m-navbar .right {\n  display: flex;\n}\n.suspension .m-navbar .right .search {\n  color: #ccc;\n}\n.suspension .m-navbar .right .search i {\n  font-size: 5.86666667vw;\n}\n.suspension .m-navbar .right .face {\n  overflow: hidden;\n  width: 6.4vw;\n  height: 6.4vw;\n  border-radius: 50%;\n  margin: 0 5.33333333vw;\n}\n.suspension .m-navbar .right .app-btn {\n  width: 19.2vw;\n  height: 6.4vw;\n}\n.suspension .channel-menu {\n  position: relative;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  height: 10.66666667vw;\n  border-bottom: 1px solid #e7e7e7;\n}\n.suspension .channel-menu .tabs {\n  overflow: hidden;\n  flex: 1;\n}\n.suspension .channel-menu .tabs .tabs-list {\n  display: flex;\n}\n.suspension .channel-menu .tabs .tabs-list a {\n  padding: 0 4.26666667vw;\n  white-space: nowrap;\n  font-size: 3.73333333vw;\n  height: 10.66666667vw;\n  line-height: 10.66666667vw;\n}\n.suspension .channel-menu .tabs .tabs-list .line {\n  position: absolute;\n  left: 4.26666667vw;\n  bottom: 0;\n  width: 7.46666667vw;\n  height: 0.53333333vw;\n  background-color: #fb7299;\n  transition: all 0.3s;\n}\n.suspension .channel-menu .after {\n  width: 10.66666667vw;\n  height: 10.4vw;\n  text-align: center;\n  line-height: 10.4vw;\n  background-color: #fff;\n  color: #ccc;\n}\n.suspension .channel-menu .after i {\n  font-size: 5.33333333vw;\n}\n.m-home {\n  padding: 22.66666667vw 1.33333333vw 0;\n}\n.m-home .video-list {\n  display: flex;\n  flex-wrap: wrap;\n}\n.m-home .video-list .video-item {\n  width: 50%;\n  padding: 2.13333333vw 1.33333333vw;\n}\n.m-home .video-list .video-item .card {\n  position: relative;\n  height: 25.86666667vw;\n}\n.m-home .video-list .video-item .card .count {\n  position: absolute;\n  left: 0;\n  bottom: 0;\n  width: 100%;\n  height: 7.2vw;\n  padding: 0 1.33333333vw;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  font-size: 3.2vw;\n  color: #fff;\n  background-image: linear-gradient(transparent, red);\n}\n.m-home .video-list .video-item .title {\n  margin-top: 1.33333333vw;\n  font-size: 3.2vw;\n}\n.app {\n  position: fixed;\n  left: 0;\n  bottom: 8vw;\n  width: 100%;\n  height: 10.13333333vw;\n}\n.app .btn-app {\n  margin: 0 5.33333333vw;\n  height: 10.13333333vw;\n  background-color: purple;\n  border-radius: 5.06666667vw;\n  text-align: center;\n  line-height: 10.13333333vw;\n  background-color: #fb7299;\n  color: #fff;\n  box-shadow: 0 0.53333vw 2.66667vw rgba(0, 0, 0, 0.2);\n}"
+        }
+      ]
+    }
+  ]
+};

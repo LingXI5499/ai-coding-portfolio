@@ -1,0 +1,19 @@
+window.HANDBOOK_DOCUMENTS = window.HANDBOOK_DOCUMENTS || {};
+window.HANDBOOK_DOCUMENTS["570d85926a37fc77ea24"] = {
+  "id": "570d85926a37fc77ea24",
+  "title": "08-综合案例.html",
+  "treatment": "代码或文本参考",
+  "sections": [
+    {
+      "title": "08-综合案例.html",
+      "level": 1,
+      "blocks": [
+        {
+          "type": "code",
+          "language": "html",
+          "text": "<!DOCTYPE html>\n\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n\n    <title>面向对象封装消息提示</title>\n\n    <style>\n      .modal {\n        width: 300px;\n\n        min-height: 100px;\n\n        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);\n\n        border-radius: 4px;\n\n        position: fixed;\n\n        z-index: 999;\n\n        left: 50%;\n\n        top: 50%;\n\n        transform: translate3d(-50%, -50%, 0);\n\n        background-color: #fff;\n      }\n\n      .modal .header {\n        line-height: 40px;\n\n        padding: 0 10px;\n\n        position: relative;\n\n        font-size: 20px;\n      }\n\n      .modal .header i {\n        font-style: normal;\n\n        color: #999;\n\n        position: absolute;\n\n        right: 15px;\n\n        top: -2px;\n\n        cursor: pointer;\n      }\n\n      .modal .body {\n        text-align: center;\n\n        padding: 10px;\n      }\n\n      .modal .footer {\n        display: flex;\n\n        justify-content: flex-end;\n\n        padding: 10px;\n      }\n\n      .modal .footer a {\n        padding: 3px 8px;\n\n        background: #ccc;\n\n        text-decoration: none;\n\n        color: #fff;\n\n        border-radius: 2px;\n\n        margin-right: 10px;\n\n        font-size: 14px;\n      }\n\n      .modal .footer a.submit {\n        background-color: #369;\n      }\n    </style>\n  </head>\n\n  <body>\n    <button id=\"delete\">删除</button>\n\n    <button id=\"login\">登录</button>\n\n    <!-- <div class=\"modal\">\n\n    <div class=\"header\">温馨提示 <i>x</i></div>\n\n    <div class=\"body\">您没有删除权限操作</div>\n\n  </div> -->\n\n    <script>\n      // 1.  模态框的构造函数\n\n      function Modal(title = '', message = '') {\n        // 公共的属性部分\n\n        this.title = title;\n\n        this.message = message;\n\n        // 因为盒子是公共的\n\n        // 1. 创建 一定不要忘了加 this\n\n        this.modalBox = document.createElement('div');\n\n        // 2. 添加类名\n\n        this.modalBox.className = 'modal';\n\n        // 3. 填充内容 更换数据\n\n        this.modalBox.innerHTML = `\n\n        <div class=\"header\">${this.title} <i>x</i></div>\n\n        <div class=\"body\">${this.message}</div>\n\n      `;\n\n        // console.log(this.modalBox)\n      }\n\n      // 2. 打开方法 挂载 到 模态框的构造函数原型身上\n\n      Modal.prototype.open = function () {\n        if (!document.querySelector('.modal')) {\n          // 把刚才创建的盒子 modalBox  渲染到 页面中  父元素.appendChild(子元素)\n\n          document.body.appendChild(this.modalBox);\n\n          // 获取 x  调用关闭方法\n\n          this.modalBox.querySelector('i').addEventListener('click', () => {\n            // 箭头函数没有this 上一级作用域的this\n\n            // 这个this 指向 m\n\n            this.close();\n          });\n        }\n      };\n\n      // 3. 关闭方法 挂载 到 模态框的构造函数原型身上\n\n      Modal.prototype.close = function () {\n        document.body.removeChild(this.modalBox);\n      };\n\n      // 4. 按钮点击\n\n      document.querySelector('#delete').addEventListener('click', () => {\n        const m = new Modal('温馨提示', '您没有权限删除');\n\n        // 调用 打开方法\n\n        m.open();\n      });\n\n      // 5. 按钮点击\n\n      document.querySelector('#login').addEventListener('click', () => {\n        const m = new Modal('友情提示', '您还么有注册账号');\n\n        // 调用 打开方法\n\n        m.open();\n      });\n    </script>\n  </body>\n</html>"
+        }
+      ]
+    }
+  ]
+};

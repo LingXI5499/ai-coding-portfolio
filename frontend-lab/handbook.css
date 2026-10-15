@@ -1,0 +1,298 @@
+.manual-open {
+  width: min(1200px, calc(100vw - 40px)) !important;
+}
+.welcome-actions {
+  flex-wrap: wrap;
+}
+.manual-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 16px;
+}
+.manual-tabs button,
+.manual-pagination button {
+  padding: 9px 14px;
+  background: #f4f5ef;
+  border: 1px solid #dce2d6;
+  border-radius: 8px;
+  color: #34513d;
+  cursor: pointer;
+}
+.manual-tabs button.active {
+  background: #35583e;
+  color: white;
+  border-color: #35583e;
+}
+.manual-workbench {
+  display: grid;
+  grid-template-columns: minmax(190px, 280px) minmax(0, 1fr);
+  gap: 22px;
+  height: min(58vh, 650px);
+}
+.manual-workbench[hidden],
+#dialogContent [hidden] {
+  display: none;
+}
+.manual-index,
+.manual-detail {
+  overflow: auto;
+  min-width: 0;
+  overscroll-behavior: contain;
+}
+.manual-index {
+  border-right: 1px solid #e0e5da;
+  padding-right: 12px;
+}
+.manual-index-item {
+  width: 100%;
+  display: grid;
+  gap: 5px;
+  text-align: left;
+  padding: 13px 12px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: #334b3a;
+  overflow-wrap: anywhere;
+}
+.manual-index-item:hover {
+  background: #f3f5ed;
+}
+.manual-index-item.selected {
+  background: #e8eddf;
+  border-color: #c9d5bc;
+}
+.manual-index-item small {
+  color: #819076;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+.manual-index-item strong {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.manual-index-item span {
+  font-size: 11px;
+  color: #829078;
+}
+.manual-detail {
+  padding: 14px 14px 24px 0;
+}
+.manual-detail h3 {
+  font-size: 22px;
+  margin: 12px 0 18px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.manual-detail h4 {
+  margin: 26px 0 12px;
+  font-size: 16px;
+}
+.manual-detail p,
+.manual-detail li {
+  line-height: 1.9;
+  font-size: 14px;
+}
+.manual-prose {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: #53624e;
+}
+.manual-note {
+  background: #f4eedc;
+  border-left: 3px solid #b79a4d;
+  padding: 10px 14px;
+  color: #70633e;
+  font-size: 12px !important;
+  line-height: 1.8;
+}
+.manual-lesson-link {
+  display: inline-block;
+  text-align: left;
+  padding: 9px 12px;
+  margin: 4px 6px 4px 0;
+  border: 1px solid #cbd9c1;
+  border-radius: 6px;
+  background: #eef3e8;
+  color: #35563d;
+  cursor: pointer;
+  font-size: 12px;
+}
+.manual-links {
+  display: flex;
+  flex-wrap: wrap;
+}
+.manual-section-select {
+  display: grid;
+  gap: 8px;
+  margin: 20px 0;
+  color: #708068;
+  font-size: 12px;
+}
+.manual-section-select select {
+  width: 100%;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #d1dacb;
+  border-radius: 6px;
+  background: white;
+  font: inherit;
+}
+.manual-location {
+  color: #85947c;
+}
+.manual-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+.manual-code-header small {
+  color: #708367;
+  font-size: 10px;
+}
+.manual-code-header button {
+  background: transparent;
+  color: #42623e;
+  border: 1px solid #d6dece;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.manual-code {
+  background: #172b22;
+  color: #dce8d8;
+  padding: 18px;
+  font:
+    12px/1.85 Consolas,
+    'Cascadia Code',
+    monospace;
+  overflow: auto;
+  white-space: pre;
+  tab-size: 2;
+  border-radius: 8px;
+  max-width: 100%;
+}
+.manual-code .token-keyword {
+  color: #d5b6e7;
+}
+.manual-sources {
+  margin-top: 28px;
+  padding: 12px;
+  background: #f6f7f1;
+  color: #78866f;
+}
+.manual-sources p {
+  font:
+    11px/1.7 Consolas,
+    monospace;
+  overflow-wrap: anywhere;
+}
+.manual-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  color: #7c8973;
+  font-size: 11px;
+}
+.manual-pagination button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.manual-project-card {
+  padding: 15px 18px;
+  background: #f5f7ef;
+  border: 1px solid #dce4d3;
+  border-radius: 10px;
+  margin: 12px 0;
+}
+.manual-project-parts {
+  padding-left: 22px;
+}
+.manual-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+.manual-metrics > div {
+  display: grid;
+  gap: 9px;
+  padding: 20px;
+  background: #eef2e5;
+  border: 1px solid #dce5ce;
+  border-radius: 10px;
+}
+.manual-metrics strong {
+  font-size: 26px;
+  color: #3d613f;
+}
+.manual-metrics span {
+  font-size: 12px;
+  color: #849475;
+}
+.manual-stat-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+.manual-stat-table th,
+.manual-stat-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e1e6d8;
+  font-size: 13px;
+}
+.provenance-link {
+  display: block;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  padding: 7px 0;
+  color: #5d7b4d;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  line-height: 1.7;
+}
+#lessonProvenance > small {
+  display: block;
+  margin-bottom: 8px;
+  color: #8b977d;
+}
+@media (max-width: 680px) {
+  .manual-open {
+    width: calc(100vw - 16px) !important;
+  }
+  .manual-workbench {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .manual-index {
+    max-height: 190px;
+    border-right: 0;
+    border-bottom: 1px solid #dce4d3;
+    padding-right: 0;
+  }
+  .manual-detail {
+    max-height: 46vh;
+    padding-right: 0;
+  }
+  .manual-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .manual-tabs {
+    gap: 5px;
+  }
+  .manual-tabs button {
+    padding: 7px 9px;
+    font-size: 11px;
+  }
+}

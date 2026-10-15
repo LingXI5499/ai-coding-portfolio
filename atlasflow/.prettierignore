@@ -1,0 +1,7 @@
+node_modules
+dist
+public/mediapipe
+package-lock.json
+test-results
+docs/live-network-check.json
+commons-live-check.json

@@ -1,0 +1,253 @@
+.code-map {
+  margin: 20px 0;
+  padding: 22px;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  background: #fff;
+  scroll-margin-top: 80px;
+}
+.code-map h2 {
+  font-size: 20px;
+  margin: 0 0 8px;
+}
+.code-map > p {
+  color: #475569;
+  line-height: 1.7;
+}
+.trace-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+.trace-toolbar button,
+.prerequisite-button {
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #1e293b;
+  cursor: pointer;
+  font: inherit;
+}
+.trace-toolbar button[aria-pressed='true'] {
+  background: #1e3a5f;
+  color: white;
+  border-color: #1e3a5f;
+}
+.trace-toolbar input {
+  flex: 1;
+  min-width: 140px;
+  padding: 9px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font: inherit;
+}
+.trace-toolbar small {
+  color: #64748b;
+}
+.trace-list {
+  display: grid;
+  gap: 8px;
+  max-height: 430px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 2px;
+}
+.trace-card {
+  border: 1px solid #dbe3ed;
+  border-radius: 10px;
+  min-width: 0;
+}
+.trace-card summary {
+  padding: 12px;
+  font:
+    13px/1.7 Consolas,
+    'Microsoft YaHei',
+    monospace;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.trace-card[open] summary {
+  background: #eff6ff;
+  border-bottom: 1px solid #dbe3ed;
+}
+.trace-body {
+  padding: 14px;
+  color: #334155;
+  font-size: 14px;
+  line-height: 1.85;
+}
+.trace-body p {
+  margin: 0 0 10px;
+  overflow-wrap: anywhere;
+}
+.trace-body small {
+  display: block;
+  color: #64748b;
+  line-height: 1.8;
+}
+.trace-body a {
+  color: #1d4ed8;
+}
+.trace-condition {
+  background: #fffbeb;
+  padding: 8px;
+  border-radius: 6px;
+}
+.trace-actions,
+.prerequisite-links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.trace-result {
+  display: block;
+  white-space: pre-wrap;
+  background: #eff6ff;
+  color: #1e3a5f;
+  padding: 14px;
+  border-radius: 10px;
+  margin-top: 16px;
+  font:
+    13px/1.8 Consolas,
+    'Microsoft YaHei',
+    monospace;
+  overflow-wrap: anywhere;
+}
+.baseline-details {
+  margin-top: 12px;
+  color: #475569;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.baseline-details summary {
+  cursor: pointer;
+}
+.baseline-details pre {
+  max-height: 280px;
+  overflow: auto;
+  white-space: pre;
+  background: #f1f5f9;
+  padding: 12px;
+}
+.learning-position {
+  padding: 16px;
+  background: #eff6ff;
+  border-left: 4px solid #3b82f6;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  line-height: 1.8;
+}
+.learning-position small {
+  color: #1d4ed8;
+  font-weight: 700;
+}
+.learning-position p {
+  margin: 8px 0 0;
+}
+.teaching-details {
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+.teaching-details summary {
+  cursor: pointer;
+  font-size: 14px;
+}
+.concept-card li {
+  line-height: 1.9;
+  margin-bottom: 10px;
+}
+.plain-terms p {
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #dbe3ed;
+}
+.experiment-loop {
+  padding: 18px;
+  border: 1px solid #b9d6c8;
+  border-radius: 10px;
+  background: #f0fdf4;
+  line-height: 1.9;
+  margin-top: 18px;
+}
+.experiment-loop h3 {
+  margin: 0 0 8px;
+}
+.js-line-help {
+  white-space: pre-line;
+}
+.chapter-roadmap {
+  margin-top: 24px;
+}
+.chapter-roadmap > details {
+  border-top: 1px solid #dbe3ed;
+  padding: 12px 0;
+}
+.chapter-roadmap summary {
+  font-weight: 700;
+  cursor: pointer;
+}
+.chapter-roadmap .path-lesson {
+  display: inline-block;
+  margin: 4px;
+  width: auto;
+}
+@media (max-width: 600px) {
+  .code-map {
+    padding: 14px;
+  }
+  .trace-toolbar input {
+    flex-basis: 100%;
+  }
+  .trace-actions button {
+    font-size: 12px;
+  }
+}
+.lesson-start {
+  padding: 18px 22px;
+  margin: 16px 0;
+  border: 1px solid #cbdcd3;
+  border-radius: 14px;
+  background: #f6faf7;
+  line-height: 1.85;
+}
+.lesson-start small {
+  color: #3f725a;
+  font-weight: 700;
+}
+.lesson-start h2 {
+  margin: 5px 0 10px;
+  font-size: 18px;
+}
+.lesson-start p {
+  margin: 8px 0;
+}
+.lesson-start details {
+  margin-top: 12px;
+  font-size: 14px;
+}
+.lesson-start summary {
+  cursor: pointer;
+  color: #315d48;
+}
+.lesson-start img {
+  display: block;
+  max-width: 100%;
+  margin: 12px auto;
+}
+.uploaded-original {
+  white-space: pre-wrap;
+  max-height: 500px;
+  overflow: auto;
+  font:
+    13px/1.8 Consolas,
+    'Microsoft YaHei',
+    monospace;
+}
+.uploaded-section {
+  padding: 12px 0;
+}

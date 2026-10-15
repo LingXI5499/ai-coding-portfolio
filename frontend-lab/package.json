@@ -1,0 +1,14 @@
+{
+  "name": "frontend-lab",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/serve.cjs",
+    "test": "node scripts/verify.cjs",
+    "test:teaching": "node scripts/verify-teaching.cjs",
+    "test:handbook": "node scripts/verify-handbook.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.64.0"
+  }
+}

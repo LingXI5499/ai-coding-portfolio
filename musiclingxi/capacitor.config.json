@@ -1,0 +1,8 @@
+{
+  "appId": "com.musiclingxi.player",
+  "appName": "MusicLingXi",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}

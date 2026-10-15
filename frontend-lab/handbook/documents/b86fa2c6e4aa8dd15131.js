@@ -1,0 +1,19 @@
+window.HANDBOOK_DOCUMENTS = window.HANDBOOK_DOCUMENTS || {};
+window.HANDBOOK_DOCUMENTS["b86fa2c6e4aa8dd15131"] = {
+  "id": "b86fa2c6e4aa8dd15131",
+  "title": "js基础实战3-编程题-题目.html",
+  "treatment": "排错练习（不自动执行）",
+  "sections": [
+    {
+      "title": "js基础实战3-编程题-题目.html",
+      "level": 1,
+      "blocks": [
+        {
+          "type": "code",
+          "language": "html",
+          "text": "<!DOCTYPE html>\n\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n\n    <title>JS基础-编程题-题目</title>\n  </head>\n\n  <body>\n    <script>\n      /*\n\n        1. 增加年龄\n\n        描述\n\n         1. 提示用户输入年龄，用户输入年龄后，把用户输入的年龄增加 5 岁\n\n         2. 增加 5 岁后，通过弹出框提示用户 “ 据我估计，五年后，你可能 XX 岁了”\n\n        */\n\n      /*\n\n        2. 用户登录验证\n\n        描述\n\n        接收用户输入的用户名和密码，若用户名为 “admin” ,且密码为 “123456” ,则提示用户登录成功!  否则，让用户一直输入。\n\n        ps：使用while循环\n\n        */\n\n      /*\n\n        3. 用户输入一个数，  计算 1 到这个数的和。\n\n         比如 用户输入的是 5， 则计算 1~5 之间的累加和 并且输出到控制台\n\n        */\n\n      /*\n\n        4. 用户输入分数，根据分数奖励不同的车( 利用多分支语句 )\n\n         - 90~100分     奖励法拉利\n\n         - 80~90分      奖励奥迪\n\n         - 60~80分      奖励奥拓\n\n         - 60分以下      打一顿\n\n        */\n\n      /*\n\n        5. 打印输出数组里所有的奇数  [5, 2, 8, 10, 3, 7]\n\n         let arrNums = [5, 2, 8, 10, 3, 7]\n\n        */\n\n      /*\n\n        6. 使用for循环 - 求出班级里同学们平均年龄 [15, 19, 21, 33, 18, 24, 10]\n\n         let arrAges = [15, 19, 21, 33, 18, 24, 10]\n\n        */\n\n      /*\n\n        7. 使用for循环 - 求出数组里大于5的和,  以及能被3整除的偶数的个数\n\n         let arrCount = [4, 9, 5, 3, 20, 6, 15, 11, 35]\n\n        */\n\n      /*\n\n        8. 给一个数字数组，该数组中有很多数字0，将不为0的数据存入到一个新的数组中\n\n         let arrAll = [4, 0, 9, 5, 0, 20, 3, 0, 11, 0 , 0, 10]\n\n        */\n\n      /*\n\n        9. 封装余额函数\n\n         目的: 复习函数的声明与调用\n\n         要求:\n\n         1. 运行程序后, 浏览器显示输入确认框(prompt)\n\n         2. 第一个输入确认框提示输入银行卡余额\n\n         3. 第二个输入确认框提示输入当月食宿消费金额\n\n         4. 第三个输入确认框提示输入当月生活消费金额\n\n         5. 输入完毕后,在页面中显示银行卡剩余金额\n\n         6. 提示: 所有功能代码封装在函数内部（函数需要把余额返回）\n\n        */\n\n      function live() {}\n\n      let money = live();\n\n      /*\n\n        10. 对象的使用\n\n        要求:\n\n        1. 对象名为 computer  电脑对象\n\n        2. 有size属性, 值为 15.6 寸\n\n        3. 有brand属性，值为 华为\n\n        4. 有playGame方法，值为函数，函数内打印 吃鸡\n\n        5. 有code方法，值为函数，函数内打印 写代码使我快乐\n\n        6. 页面中输出电脑对象的size 和 brand属性的值\n\n        7. 调用对象中的playGame 和 code的方法\n\n        */\n\n      let computer = {};\n\n      /*\n\n        11. 计算m-n之间所有数的和\n\n          需要有函数的使用\n\n        */\n\n      /*\n\n        12. 猜数字游戏，设定次数，最多猜5次\n\n        要求\n\n        1. 生成随机的数字0到20\n\n        2. 只能猜5次，5次机会用完提示 `这都猜不到`\n\n        3. 猜对了，就提示 恭喜猜对拉\n\n        4. 猜小了，您猜的数字小了\n\n        5. 猜大了，就提示用户 您猜的数字大了\n\n        */\n\n      /*          \n\n        13. 小娜\n\n        需求: 只要用户输入的不是相关选项, 则一直存在弹出输入提示框, 等待用户的输入\n\n        思路:\n\n          - while() 循环\n\n          - 弹出输入框\n\n        */\n\n      /*\n\n        14. 实现数组里求最大值的函数\n\n        let arrayNums = [4, 9, 5, 3, 20, 6, 15, 11]\n\n        */\n\n      /*\n\n        15. 操作数组对象\n\n        需求1: 遍历数组里每个对象, 判断出哪个人最大 - 打印它的名字\n\n        需求2: 遍历数组里每个对象, 为每个人增加5岁的年龄, 最后打印整个数组在控制台查看\n\n        let arrPers = [\n\n        {\n\n          name: '小明',\n\n          age: 18,\n\n          sex: '男',\n\n        },\n\n        {\n\n          name: '老刘',\n\n          age: 38,\n\n          sex: '男',\n\n        },\n\n        {\n\n          name: '小王',\n\n          age: 19,\n\n          sex: '女',\n\n        },\n\n      ]\n\n        */\n    </script>\n  </body>\n</html>"
+        }
+      ]
+    }
+  ]
+};
