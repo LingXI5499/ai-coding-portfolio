@@ -26,7 +26,7 @@ GitHub 仓库地址：
 
 [https://github.com/LingXI5499/ai-coding-portfolio](https://github.com/LingXI5499/ai-coding-portfolio)
 
-本系列位于仓库中的 [java-fullstack-evolution 目录](https://github.com/LingXI5499/ai-coding-portfolio/tree/main/java-fullstack-evolution)。本文功能说明与测试统计对应代码提交 [d08294e](https://github.com/LingXI5499/ai-coding-portfolio/commit/d08294ed8635947ab7851c571a7831ef6b77f0b2)，各版源码链接也固定到该提交，便于对照。
+本系列位于仓库中的 [java-fullstack-evolution 目录](https://github.com/LingXI5499/ai-coding-portfolio/tree/main/java-fullstack-evolution)。本文功能说明与测试统计对应代码提交 [693e059](https://github.com/LingXI5499/ai-coding-portfolio/commit/693e05974a4075691feca120d0ea6c9ec1e5b899)，各版源码链接也固定到该提交，便于对照。
 
 ### 2.1 技术基线
 
@@ -119,7 +119,7 @@ SQL 统一位于各版 `backend/src/main/resources/db/`。V01–V09 使用本版
 
 ### 3.1 V01：先走通员工 CRUD 的完整链路
 
-[V01-employee-crud 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/d08294ed8635947ab7851c571a7831ef6b77f0b2/java-fullstack-evolution/V01-employee-crud)
+[V01-employee-crud 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/693e05974a4075691feca120d0ea6c9ec1e5b899/java-fullstack-evolution/V01-employee-crud)
 
 第一版解决最基本的问题：浏览器中的一次操作，怎样变成数据库中的一条记录？
 
@@ -145,7 +145,7 @@ MySQL employee 表
 
 ### 3.2 V02：让接口具备明确的输入和输出边界
 
-[V02-api-contract 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/d08294ed8635947ab7851c571a7831ef6b77f0b2/java-fullstack-evolution/V02-api-contract)
+[V02-api-contract 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/693e05974a4075691feca120d0ea6c9ec1e5b899/java-fullstack-evolution/V02-api-contract)
 
 接口跑通后，需要进一步明确：调用方能够提交哪些字段，能够拿到哪些字段，输入错误时会得到什么结果。
 
@@ -157,7 +157,7 @@ V02 起响应包含 `code`、`message`、`data`、`traceId`。同时保留真实
 
 ### 3.3 V03：对照 XHR、Fetch 和 Axios 的请求行为
 
-[V03-http-clients 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/d08294ed8635947ab7851c571a7831ef6b77f0b2/java-fullstack-evolution/V03-http-clients)
+[V03-http-clients 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/693e05974a4075691feca120d0ea6c9ec1e5b899/java-fullstack-evolution/V03-http-clients)
 
 同一个员工接口，换一种前端请求方式，为什么错误处理代码就不同了？V03 通过同一套 API 对照三种 HTTP 客户端。
 
@@ -171,7 +171,7 @@ XHR 以事件回调为基础，在项目中包装为 Promise；Fetch 需要显�
 
 ### 3.4 V04：使用 Vue 组织真正的前端应用
 
-[V04-vue-fullstack 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/d08294ed8635947ab7851c571a7831ef6b77f0b2/java-fullstack-evolution/V04-vue-fullstack)
+[V04-vue-fullstack 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/693e05974a4075691feca120d0ea6c9ec1e5b899/java-fullstack-evolution/V04-vue-fullstack)
 
 当列表、表单、详情和加载状态逐渐增多，手动维护 DOM 的成本也会增加。V04 保留后端员工 API，把前端升级为 Vue 3 单页应用。
 
@@ -185,7 +185,7 @@ Vue 管理响应式状态，Vue Router 组织列表、创建、详情、编辑�
 
 ### 3.5 V05：切换到账户业务，理解 Session 登录
 
-[V05-account-session 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/d08294ed8635947ab7851c571a7831ef6b77f0b2/java-fullstack-evolution/V05-account-session)
+[V05-account-session 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/693e05974a4075691feca120d0ea6c9ec1e5b899/java-fullstack-evolution/V05-account-session)
 
 从 V05 开始，业务主题由员工管理切换为账户体系。员工接口在这一版移除，学习重点转向身份状态的建立与恢复。
 
@@ -199,7 +199,7 @@ Vue 管理响应式状态，Vue Router 组织列表、创建、详情、编辑�
 
 ### 3.6 V06：补齐改密、撤销和失败登录限制
 
-[V06-session-hardening 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/d08294ed8635947ab7851c571a7831ef6b77f0b2/java-fullstack-evolution/V06-session-hardening)
+[V06-session-hardening 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/693e05974a4075691feca120d0ea6c9ec1e5b899/java-fullstack-evolution/V06-session-hardening)
 
 能够登录以后，还要回答：连续猜错密码怎么办？修改密码之后，旧会话是否仍然可用？
 
@@ -213,7 +213,7 @@ Session 配置还包含 20 分钟闲置超时。配置值与真正等待超时�
 
 ### 3.7 V07：由 Spring Security 接管 Session
 
-[V07-spring-security-session 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/d08294ed8635947ab7851c571a7831ef6b77f0b2/java-fullstack-evolution/V07-spring-security-session)
+[V07-spring-security-session 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/693e05974a4075691feca120d0ea6c9ec1e5b899/java-fullstack-evolution/V07-spring-security-session)
 
 手写认证便于理解流程，但会话上下文、过滤顺序、登录成功失败处理和权限检查，需要持续维护。V07 把通用认证工作交给 Spring Security。
 
@@ -227,7 +227,7 @@ Session 配置还包含 20 分钟闲置超时。配置值与真正等待超时�
 
 ### 3.8 V08：理解 JWT、访问令牌和刷新令牌
 
-[V08-jwt-auth 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/d08294ed8635947ab7851c571a7831ef6b77f0b2/java-fullstack-evolution/V08-jwt-auth)
+[V08-jwt-auth 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/693e05974a4075691feca120d0ea6c9ec1e5b899/java-fullstack-evolution/V08-jwt-auth)
 
 V08 将身份传递方式切换为 JWT，重点是短期访问凭据与长期刷新凭据如何配合。这是另一种认证方案的实践，选择 Session 还是 JWT，仍取决于系统场景。
 
@@ -244,7 +244,7 @@ V08 将身份传递方式切换为 JWT，重点是短期访问凭据与长期刷
 
 ### 3.9 V09：把账户从“能登录”扩展为完整生命周期
 
-[V09-account-lifecycle 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/d08294ed8635947ab7851c571a7831ef6b77f0b2/java-fullstack-evolution/V09-account-lifecycle)
+[V09-account-lifecycle 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/693e05974a4075691feca120d0ea6c9ec1e5b899/java-fullstack-evolution/V09-account-lifecycle)
 
 账户体系还需要处理资料修改、密码遗忘、异常设备和账号状态变化。V09 将这些操作放进完整业务流程。
 
@@ -262,7 +262,7 @@ V08 将身份传递方式切换为 JWT，重点是短期访问凭据与长期刷
 
 ### 3.10 V10：补齐可构建、可迁移、可检查的交付过程
 
-[V10-production-ready 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/d08294ed8635947ab7851c571a7831ef6b77f0b2/java-fullstack-evolution/V10-production-ready)
+[V10-production-ready 源码与运行说明](https://github.com/LingXI5499/ai-coding-portfolio/tree/693e05974a4075691feca120d0ea6c9ec1e5b899/java-fullstack-evolution/V10-production-ready)
 
 最后一版处理交付过程：换到一个空数据库和新的运行环境时，项目能否按照固定步骤建立结构、构建产物并检查状态？
 
@@ -361,7 +361,7 @@ LIMIT ? OFFSET ?;
 
 这种 `COUNT + LIMIT/OFFSET` 分页适合本项目的常规列表。包含搜索、深分页和总数统计都有成本，跨请求的数据变化也可能造成记录位移；海量数据场景需要继续结合执行计划、索引、游标分页和实际负载评估。
 
-源码说明见 [条件查询与分页指南](https://github.com/LingXI5499/ai-coding-portfolio/blob/d08294ed8635947ab7851c571a7831ef6b77f0b2/java-fullstack-evolution/docs/query-and-pagination.md)。
+源码说明见 [条件查询与分页指南](https://github.com/LingXI5499/ai-coding-portfolio/blob/693e05974a4075691feca120d0ea6c9ec1e5b899/java-fullstack-evolution/docs/query-and-pagination.md)。
 
 ## 五、数据库关联统一使用逻辑外键
 
@@ -452,7 +452,7 @@ V05–V10 的启动方式相同：进入所选版本的后端和前端目录，�
 
 本地后端与浏览器验证使用 H2；GitHub Actions 另使用 MySQL 8.4 隔离数据库执行后端测试和十版浏览器流程，其中 V01 还会重启后端验证记录仍在。条件分页覆盖超过 200 条数据、组合筛选、参数边界、字面通配符、页码回退和管理员权限。
 
-可核对 [GitHub Actions 验证工作流](https://github.com/LingXI5499/ai-coding-portfolio/actions/workflows/java-fullstack-evolution.yml) 与 [版本化验证记录](https://github.com/LingXI5499/ai-coding-portfolio/blob/d08294ed8635947ab7851c571a7831ef6b77f0b2/java-fullstack-evolution/docs/verification.md)。新增用例覆盖私有图片、事务补偿、配额、完整性、联表聚合、AOP 日志隐私、图表释放及真实 OSS SDK 的环回协议。真实 OSS 账号、SMTP、邮箱所有权验证、目标服务器 Nginx/TLS、生产账户权限、备份恢复、真实闲置超时以及性能容量仍需进一步验收。
+可核对 [GitHub Actions 验证工作流](https://github.com/LingXI5499/ai-coding-portfolio/actions/workflows/java-fullstack-evolution.yml) 与 [版本化验证记录](https://github.com/LingXI5499/ai-coding-portfolio/blob/693e05974a4075691feca120d0ea6c9ec1e5b899/java-fullstack-evolution/docs/verification.md)。新增用例覆盖私有图片、事务补偿、配额、完整性、联表聚合、AOP 日志隐私、图表释放及真实 OSS SDK 的环回协议。真实 OSS 账号、SMTP、邮箱所有权验证、目标服务器 Nginx/TLS、生产账户权限、备份恢复、真实闲置超时以及性能容量仍需进一步验收。
 
 后续如果用于实际业务，应结合真实用户量、部署方式和恢复要求继续完善。阅读本系列时，尤其要保留三个判断：权限由服务端执行；令牌需要明确撤销规则；可以构建和通过测试之后，还需要在目标环境验证交付条件。
 
@@ -736,7 +736,7 @@ nginx -v
 sudo nginx -t
 ```
 
-构建后将前端 `dist/` 内容发布为静态资源，将后端 JAR 作为独立服务运行。参考仓库中的 [Nginx 与 systemd 配置](https://github.com/LingXI5499/ai-coding-portfolio/tree/d08294ed8635947ab7851c571a7831ef6b77f0b2/java-fullstack-evolution/V10-production-ready/deploy)，替换域名、证书和目录；配置 `/api` 代理以及 Vue history 路由的页面回退，再按 [部署与恢复指南](https://github.com/LingXI5499/ai-coding-portfolio/blob/d08294ed8635947ab7851c571a7831ef6b77f0b2/java-fullstack-evolution/docs/deployment.md) 验收目标环境。Vite 开发服务用于本地联调，公网交付使用构建产物。
+构建后将前端 `dist/` 内容发布为静态资源，将后端 JAR 作为独立服务运行。参考仓库中的 [Nginx 与 systemd 配置](https://github.com/LingXI5499/ai-coding-portfolio/tree/693e05974a4075691feca120d0ea6c9ec1e5b899/java-fullstack-evolution/V10-production-ready/deploy)，替换域名、证书和目录；配置 `/api` 代理以及 Vue history 路由的页面回退，再按 [部署与恢复指南](https://github.com/LingXI5499/ai-coding-portfolio/blob/693e05974a4075691feca120d0ea6c9ec1e5b899/java-fullstack-evolution/docs/deployment.md) 验收目标环境。Vite 开发服务用于本地联调，公网交付使用构建产物。
 
 ## 附录 F：怎样重新执行测试
 
@@ -770,7 +770,7 @@ npx.cmd playwright install chromium
 npm.cmd run test:e2e
 ```
 
-浏览器下载机制见 [Playwright 官方文档](https://playwright.dev/docs/browsers)。脚本自动选择空闲端口，启动和停止自己创建的应用进程，操作十个版本；本地默认使用临时 H2。完整 MySQL 验证可对照仓库中的 [GitHub Actions 工作流](https://github.com/LingXI5499/ai-coding-portfolio/blob/d08294ed8635947ab7851c571a7831ef6b77f0b2/.github/workflows/java-fullstack-evolution.yml)。
+浏览器下载机制见 [Playwright 官方文档](https://playwright.dev/docs/browsers)。脚本自动选择空闲端口，启动和停止自己创建的应用进程，操作十个版本；本地默认使用临时 H2。完整 MySQL 验证可对照仓库中的 [GitHub Actions 工作流](https://github.com/LingXI5499/ai-coding-portfolio/blob/693e05974a4075691feca120d0ea6c9ec1e5b899/.github/workflows/java-fullstack-evolution.yml)。
 
 ## 附录 G：常见问题与定位顺序
 
