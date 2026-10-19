@@ -1,0 +1,18 @@
+{
+  "title": "Java 全栈入门实战：Spring Boot + Vue 前后端分离（10 个版本，附完整源码）",
+  "summary": "一个员工接口，如何演进为包含前后端分离、账户安全、统计图表、文件上传和交付配置的完整项目？本文以十个独立版本串联 Java 17、Spring Boot、MyBatis 与 Vue 3，讲解每次演进的原因、实现重点和验证方式，给出学习地图、源码地址、条件分页示例与 Windows 安装附录，帮助读者结合代码及 AI 辅助解释，逐步理解 Java Web 与全栈开发。",
+  "tags": [
+    "Java",
+    "Spring Boot",
+    "Vue",
+    "MyBatis",
+    "MySQL",
+    "Spring Security",
+    "JWT",
+    "前后端分离",
+    "文件上传"
+  ],
+  "bodyFile": "body.md",
+  "sourceRepository": "https://github.com/LingXI5499/ai-coding-portfolio",
+  "sourceCommit": "d08294ed8635947ab7851c571a7831ef6b77f0b2"
+}
