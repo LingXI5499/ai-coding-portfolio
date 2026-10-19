@@ -59,5 +59,7 @@
     width: 100%;
     height: 280px;
     min-width: 0;
+    /* ResizeObserver 重绘前，旧尺寸的 SVG 也不能撑开页面。 */
+    overflow: hidden;
   }
 </style>

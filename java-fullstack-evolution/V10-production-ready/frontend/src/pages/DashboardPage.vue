@@ -189,7 +189,8 @@
   }
   @media (max-width: 760px) {
     .report-grid {
-      grid-template-columns: 1fr;
+      /* 允许列宽小于图表上一次渲染的固有宽度。 */
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 </style>

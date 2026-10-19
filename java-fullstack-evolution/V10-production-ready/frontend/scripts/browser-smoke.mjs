@@ -370,6 +370,21 @@ async function account(page, context, origin, runtime, n) {
         ),
         'Dashboard mobile page overflows',
       );
+      await expect
+        .poll(() =>
+          page.locator('.report-chart').evaluateAll((charts) =>
+            charts.every((chart) => {
+              const svg = chart.querySelector('svg');
+              return (
+                svg &&
+                Math.abs(
+                  svg.getBoundingClientRect().width - chart.clientWidth,
+                ) <= 1
+              );
+            }),
+          ),
+        )
+        .toBe(true);
       await page.screenshot({
         path: path.join(runtime, 'dashboard-mobile.png'),
         fullPage: true,
