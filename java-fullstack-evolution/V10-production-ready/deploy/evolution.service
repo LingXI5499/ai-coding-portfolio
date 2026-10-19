@@ -1,0 +1,22 @@
+[Unit]
+Description=Java Full-Stack Evolution Account API
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=evolution
+Group=evolution
+WorkingDirectory=/srv/evolution/backend
+EnvironmentFile=/etc/evolution/runtime.env
+ExecStart=/usr/bin/java -jar /srv/evolution/backend/evolution-v10-1.0.0.jar
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'https://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace="com.lingxi.evolution.mapper.AccountMapper">
+    <sql id="columns">id, username, password_hash, nickname, email, status, role, auth_version, created_at, updated_at</sql>
+    <select id="findByUsername" resultType="com.lingxi.evolution.entity.Account">
+        SELECT
+        <include refid="columns"/>
+         FROM app_user WHERE username=#{username}
+    </select>
+    <select id="findById" resultType="com.lingxi.evolution.entity.Account">
+        SELECT
+        <include refid="columns"/>
+         FROM app_user WHERE id=#{id}
+    </select>
+    <select id="list" resultType="com.lingxi.evolution.entity.Account">
+        SELECT
+        <include refid="columns"/>
+         FROM app_user ORDER BY id LIMIT 200
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">INSERT INTO app_user(username,password_hash,nickname,email) VALUES(#{username},#{passwordHash},#{nickname},#{email})</insert>
+    <update id="password">UPDATE app_user SET password_hash=#{hash}, auth_version=auth_version+1, updated_at=CURRENT_TIMESTAMP WHERE id=#{id}</update>
+    <update id="profile">UPDATE app_user SET nickname=#{nickname}, email=#{email}, updated_at=CURRENT_TIMESTAMP WHERE id=#{id}</update>
+    <update id="status">UPDATE app_user SET status=#{status}, auth_version=auth_version+1, updated_at=CURRENT_TIMESTAMP WHERE id=#{id}</update>
+    <update id="invalidate">UPDATE app_user SET auth_version=auth_version+1, updated_at=CURRENT_TIMESTAMP WHERE id=#{id}</update>
+</mapper>

@@ -1,6 +1,6 @@
 # AI Coding Portfolio · AI Coding 作品集合
 
-八个独立项目的源码集合，涵盖交互展示、教学平台、效率工具、Android、Python 和 Unity。每个一级目录是一项作品，分别安装依赖、运行和构建；整个集合由一个 Git 仓库管理。
+九个独立项目的源码集合，涵盖交互展示、教学平台、效率工具、Android、Python 和 Unity。每个一级目录是一项作品，分别安装依赖、运行和构建；整个集合由一个 Git 仓库管理。
 
 | 目录 | 作品 | 主要内容 | 技术 |
 | --- | --- | --- | --- |
@@ -12,6 +12,7 @@
 | [musiclingxi](musiclingxi/) | 离线音乐播放器 | 播放队列、同步歌词、Android 后台与锁屏控制 | JavaScript / Capacitor / Android |
 | [ai-intelligence-daily](ai-intelligence-daily/) | AI 情报日报 | 公开信息聚合、每日刷新和可选 AI 摘要 | Python / FastAPI / SQLite |
 | [starfall-ruins](starfall-ruins/) | 星陨遗迹 | 移动跳跃、碎片收集、祭坛与传送门 | Unity / C# / Blender |
+| [java-fullstack-evolution](java-fullstack-evolution/) | Java 全栈进化实验室 | 十个独立项目，从 CRUD、HTTP、Vue 到账户认证、安全与部署 | Java / Spring Boot / MyBatis / MySQL / Vue / Spring Security |
 
 ## 开始使用
 
@@ -23,7 +24,7 @@ npm ci
 npm run dev
 ```
 
-各应用独立启动，默认端口可能相同，不需要同时运行全部作品。集合不使用 Git 子模块，也不包含嵌套 .git；克隆一次即可获得八项作品。
+各应用独立启动，默认端口可能相同，不需要同时运行全部作品。集合不使用 Git 子模块，也不包含嵌套 .git；克隆一次即可获得九项作品。
 
 ## 内容说明
 

@@ -1,0 +1,27 @@
+# 真实浏览器验收
+
+browser-smoke.mjs 使用本版本锁定的 Playwright，在真实 Chromium 中逐版操作页面。它是测试编排脚本，不属于任一应用的运行时依赖。
+
+先从系列目录运行 `scripts/verify.ps1`，准备十个已测试的 JAR、八个 frontend 的依赖与 dist。V10 的前端安装包含 Playwright 包；如果机器尚无匹配浏览器，在 V10/frontend 执行 `npx playwright install chromium`。本次交付使用机器上已存在的匹配 Chromium，没有重新下载浏览器。
+
+然后在 V10/frontend 执行：
+
+```powershell
+npm run test:e2e
+```
+
+脚本自行启动和停止测试 JAR 与 Vite preview，使用动态空闲端口和临时 H2 数据库，不需要预先启动应用，不占用既有 808x 服务。每个版本的临时工作目录、服务日志与截图位于 frontend/test-results，已被 Git 忽略。测试只终止自己创建的子进程。
+
+仅检查一版时：
+
+```powershell
+$env:SMOKE_VERSION='V09'
+npm run test:e2e
+Remove-Item Env:SMOKE_VERSION
+```
+
+V01/V02 验证页面新增、修改、刷新与删除；V03 验证三种客户端查询、新增、HTTP 400 和网络失败；V04 验证 Vue CRUD、详情与路由刷新；V05–V10 验证注册、登录、刷新页面、Cookie、CSRF 和退出。V06 起操作改密；V09 起修改资料、检查手机布局、从私有开发投递目录读取本次重置邮件并完成密码重置。
+
+测试失败返回非零退出码；不会输出 Cookie、密码或令牌。此脚本使用 demo/H2，不能代替 MySQL 持久化、真实 SMTP、HTTPS 或服务器部署验收。
+
+CI 设置 `SMOKE_MYSQL=true`，注入仅供临时服务使用的 DB_USERNAME/DB_PASSWORD，按版本选择已初始化的隔离 MySQL 8.4 数据库。该模式还会在 V01 页面编辑后重启后端，核对记录仍存在。不能将这些测试变量指向生产数据库。

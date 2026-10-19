@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'https://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace="com.lingxi.evolution.mapper.LifecycleMapper">
+    <insert id="audit">INSERT INTO audit_event(user_id,action) VALUES(#{userId},#{action})</insert>
+    <insert id="reset">INSERT INTO password_reset(token_hash,user_id,expires_at) VALUES(#{hash},#{userId},#{expires})</insert>
+    <select id="resetUser" resultType="java.lang.Long">SELECT user_id FROM password_reset WHERE token_hash=#{hash}</select>
+    <update id="consumeReset">UPDATE password_reset SET used=TRUE WHERE token_hash=#{hash} AND used=FALSE AND expires_at &gt; #{now}</update>
+    <update id="invalidateResets">UPDATE password_reset SET used=TRUE WHERE user_id=#{userId}</update>
+</mapper>

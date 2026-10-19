@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS employee (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    gender VARCHAR(10) NOT NULL,
+    age INT NOT NULL,
+    phone VARCHAR(20),
+    department VARCHAR(100) NOT NULL,
+    salary DECIMAL(10,2) NOT NULL,
+    create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT ck_employee_age CHECK (age BETWEEN 18 AND 70),
+    CONSTRAINT ck_employee_salary CHECK (salary >= 0)
+);

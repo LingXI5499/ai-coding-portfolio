@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'https://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace="com.lingxi.evolution.mapper.EmployeeMapper">
+    <sql id="columns">id, name, gender, age, phone, department, salary, create_time, update_time</sql>
+    <select id="findAll" resultType="com.lingxi.evolution.entity.Employee">
+        SELECT
+        <include refid="columns"/>
+         FROM employee ORDER BY id LIMIT 200
+    </select>
+    <select id="findById" resultType="com.lingxi.evolution.entity.Employee">
+        SELECT
+        <include refid="columns"/>
+         FROM employee WHERE id = #{id}
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">INSERT INTO employee(name, gender, age, phone, department, salary) VALUES(#{name}, #{gender}, #{age}, #{phone}, #{department}, #{salary})</insert>
+    <update id="update">UPDATE employee SET name=#{name}, gender=#{gender}, age=#{age}, phone=#{phone}, department=#{department}, salary=#{salary}, update_time=CURRENT_TIMESTAMP WHERE id=#{id}</update>
+    <delete id="delete">DELETE FROM employee WHERE id=#{id}</delete>
+</mapper>

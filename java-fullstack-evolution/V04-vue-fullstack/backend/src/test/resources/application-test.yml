@@ -1,0 +1,11 @@
+# 内存演示库；进程停止后清空，不能用于生产。
+spring:
+  datasource:
+    url: ${TEST_DB_URL:jdbc:h2:mem:v04;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE}
+    username: ${TEST_DB_USERNAME:sa}
+    password: ${TEST_DB_PASSWORD:}
+    driver-class-name: ${TEST_DB_DRIVER:org.h2.Driver}
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/init.sql
