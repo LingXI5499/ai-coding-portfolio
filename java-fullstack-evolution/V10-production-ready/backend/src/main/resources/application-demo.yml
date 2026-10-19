@@ -1,6 +1,8 @@
 # 内存演示库；进程停止后清空，不能用于生产。
 spring:
   datasource:
+    hikari:
+      connection-init-sql: "SET TIME ZONE 'UTC'"
     url: jdbc:h2:mem:v10;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
     username: sa
     password:

@@ -1,5 +1,7 @@
 # 十篇中文教程草稿
 
+系列总览另见 [十版本实践博客与发布文件](../publication/README.md)，包含项目缘起、全部版本介绍、条件分页、验证结果及软件安装附录。
+
 - [V01：员工 CRUD 与最小全栈联调](V01-employee-crud.md)
 - [V02：DTO、VO 与可预测的 API 契约](V02-api-contract.md)
 - [V03：同一个 API：XHR、Fetch 与 Axios](V03-http-clients.md)

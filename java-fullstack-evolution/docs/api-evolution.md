@@ -10,8 +10,10 @@ V01 的单条接口直接返回员工对象，列表返回分页对象，创建 
 | 403 | 权限不足或 Cookie 请求 CSRF 失败 |
 | 404 | 资源不存在 |
 | 409 | 唯一性或业务冲突 |
+| 413 | 上传文件或请求体过大 |
 | 429 | 登录或密码恢复频率限制 |
 | 500 | 内部错误，给 traceId，不给堆栈或 SQL |
+| 503 | 私有存储不可用或文件完整性校验失败 |
 
 ## V01–V04：员工
 
@@ -58,6 +60,18 @@ V07 的登录由 Spring Security 表单过滤器处理，使用 `application/x-w
 
 `/api/account/profile/{其他用户ID}` 不存在，不能把 URL 改成别人的 ID 越权。V10 通过 `/v3/api-docs` 提供可查看的 OpenAPI JSON、`/swagger-ui/index.html` 提供本机 Swagger；生产 profile 禁用。`/actuator/health` 仅暴露状态。
 
+
+## V10 综合练习接口
+
+| Method / 路径 | 输入与权限 | 输出 |
+| --- | --- | --- |
+| POST /api/files | Bearer；multipart 的 file，PNG/JPEG | 201，公开元数据；大小 413、格式 400、配额 409 |
+| GET /api/files | 当前主体；page/pageSize | 仅本人文件分页，忽略客户端试图指定的所有者 |
+| GET /api/files/{id}/content | 当前主体拥有该文件 | PNG 二进制、no-store；他人或不存在 404 |
+| GET /api/admin/dashboard | ADMIN | 账户状态与七日活动聚合 |
+| GET /api/admin/audit-events | ADMIN；keyword/action/page/pageSize | LEFT JOIN 账户后的审计分页 |
+
+上传前验证并重新编码图片，单张输入和输出均不超过 2 MiB，最多 400 万像素，每账户最多 20 张。元数据不返回存储 key 或 Bucket。接口与失败路径说明见 [存储和报表指南](storage-and-reports.md)。
 
 ## 条件分页参数与迁移
 

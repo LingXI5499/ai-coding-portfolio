@@ -11,8 +11,12 @@ server:
         same-site: strict
         secure: ${COOKIE_SECURE:false}
 spring:
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 3MB
   datasource:
-    url: ${DB_URL:jdbc:mysql://localhost:3306/java_fullstack_v10?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC}
+    url: ${DB_URL:jdbc:mysql://localhost:3306/java_fullstack_v10?useUnicode=true&characterEncoding=UTF-8&connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true}
     username: ${DB_USERNAME:lab}
     password: ${DB_PASSWORD:}
   sql:
@@ -29,6 +33,9 @@ mybatis:
 logging:
   level:
     root: INFO
+    com.aliyun.oss: OFF
+    org.apache.http.wire: OFF
+    org.apache.http.headers: OFF
 springdoc:
   api-docs:
     enabled: ${OPENAPI_ENABLED:true}

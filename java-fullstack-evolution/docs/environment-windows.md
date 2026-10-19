@@ -90,6 +90,14 @@ V03–V10 前端依次使用 5173–5180，后端依次 8083–8090。开发代�
 
 停止时对前后端两个终端按 Ctrl+C；IDEA 点 Stop。切换版本先停止旧版，退出旧账户，再打开新端口。清理测试数据前核对库名；不要把删除整个 MySQL 数据目录当作重置步骤。
 
+## V10 综合练习与可选环境
+
+Element Plus 与 ECharts 由 V10 的 `npm ci` 下载，无需全局安装或浏览器插件。默认上传存储为应用工作目录中的 `.local-uploads/`，无需云账号；目录必须是服务私有目录。真实 OSS 的 Bucket、RAM、环境变量与验收见 [存储和报表指南](storage-and-reports.md)。
+
+V10 自定义 MySQL DB_URL 应保留 `connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true`，保证按 UTC 自然日聚合。H2 演示与默认测试自动设置 UTC；用 MySQL 运行测试时，还应将 `TEST_DB_INIT_SQL` 设置为 `SET time_zone = '+00:00'`，CI 已配置。
+
+初次学习可按 [入门路线](beginner-roadmap.md)；可选接口客户端见 [调试指南](api-debugging.md)，Maven 继承、聚合与私服见 [工程化扩展](engineering-extension.md)。
+
 ## 常见故障
 
 - `release version 17 not supported`：Wrapper 正在用旧 JDK，检查 JAVA_HOME、IDEA Maven Runner。

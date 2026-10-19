@@ -11,6 +11,10 @@
       <small>JAVA FULL-STACK / V10</small>
       <nav class="nav">
         <RouterLink to="/account">我的账户</RouterLink>
+        <RouterLink v-if="auth.user" to="/files">文件练习</RouterLink>
+        <RouterLink v-if="auth.user?.role === 'ADMIN'" to="/dashboard">
+          统计与审计
+        </RouterLink>
         <RouterLink to="/login">登录</RouterLink>
         <RouterLink to="/register">创建账户</RouterLink>
         <RouterLink v-if="auth.user?.role === 'ADMIN'" to="/admin">

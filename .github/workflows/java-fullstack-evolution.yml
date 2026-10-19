@@ -45,6 +45,7 @@ jobs:
           TEST_DB_USERNAME: root
           TEST_DB_PASSWORD: ci-ephemeral-only
           TEST_DB_DRIVER: com.mysql.cj.jdbc.Driver
+          TEST_DB_INIT_SQL: "SET time_zone = '+00:00'"
         shell: bash
         run: |
           set -euo pipefail
@@ -52,7 +53,7 @@ jobs:
             version=$(basename "$project" | cut -c2-3)
             database="java_fullstack_v${version}"
             mysql -h 127.0.0.1 -u root -e "CREATE DATABASE ${database} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-            export TEST_DB_URL="jdbc:mysql://127.0.0.1:3306/${database}?serverTimezone=UTC"
+            export TEST_DB_URL="jdbc:mysql://127.0.0.1:3306/${database}?connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true"
             (cd "$project/backend" && chmod +x mvnw && ./mvnw --batch-mode clean verify)
           done
       - name: Frontend test and build

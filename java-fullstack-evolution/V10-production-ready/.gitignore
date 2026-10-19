@@ -17,3 +17,4 @@ coverage/
 test-results/
 playwright-report/
 .local-mail/
+.local-uploads/

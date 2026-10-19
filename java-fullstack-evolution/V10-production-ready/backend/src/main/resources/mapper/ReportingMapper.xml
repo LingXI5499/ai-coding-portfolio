@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lingxi.evolution.mapper.ReportingMapper">
+    <select id="userStates" resultType="com.lingxi.evolution.vo.UserStateCount">
+        SELECT status, COUNT(*) AS total FROM app_user GROUP BY status ORDER BY status
+    </select>
+    <select id="activity" resultType="com.lingxi.evolution.vo.ActivityDay">
+        SELECT CAST(created_at AS DATE) AS activity_day, COUNT(*) AS total
+        FROM audit_event
+        WHERE created_at &gt;= #{since} AND created_at &lt; #{until}
+        GROUP BY CAST(created_at AS DATE) ORDER BY activity_day
+    </select>
+    <!-- LEFT JOIN 保留无用户主体的事件；WHERE 条件由计数和当前页查询共同使用。 -->
+    <sql id="auditSource">
+        FROM audit_event a LEFT JOIN app_user u ON u.id = a.user_id
+        <where>
+            <if test="query.keyword != null">u.username LIKE #{query.keywordPattern} ESCAPE '!'</if>
+            <if test="query.action != null">AND a.action = #{query.action}</if>
+        </where>
+    </sql>
+    <select id="countAudit" resultType="long">
+        SELECT COUNT(*) <include refid="auditSource"/>
+    </select>
+    <select id="searchAudit" resultType="com.lingxi.evolution.vo.AuditEventVO">
+        SELECT a.id, a.user_id, u.username, a.action, a.created_at
+        <include refid="auditSource"/>
+        ORDER BY a.id DESC LIMIT #{query.pageSize} OFFSET #{query.offset}
+    </select>
+</mapper>

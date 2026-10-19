@@ -20,7 +20,7 @@
 
 生产交付包括可重复构建、数据库版本控制、可观测性和恢复策略。通过本机测试并不自动证明线上部署、邮件或 TLS 可用。
 
-Flyway 按 V1、V2、V3 创建账户、刷新令牌、重置与审计表；不在启动时清表。ProductionGuard 拒绝缺少生产凭据、关闭 Secure Cookie 或非 MySQL 数据源的配置。
+Flyway 按 V1–V4 创建账户、刷新令牌、重置、审计与上传元数据表；不在启动时清表。ProductionGuard 拒绝缺少生产凭据、关闭 Secure Cookie 或非 MySQL 数据源的配置。
 
 迁移不能靠删除 Flyway 历史表回滚。先备份数据库，验证恢复；优先前向修复，必要时恢复备份并回退到兼容旧模式的应用版本。
 
@@ -103,11 +103,23 @@ npm run dev  # 前端端口 5180，API 代理到 8090
 - 401：检查登录、过期、禁用和身份版本；403：检查权限与 Cookie 端点 CSRF。
 - 页面空白：查看控制台与 Network，确认当前版本的 Vite 端口和代理目标一致。
 
+## 综合练习：组件、图表、联表与文件
+
+本版将前面的请求、校验、权限、数据库和配置连接起来：`DashboardPage.vue` 使用 Element Plus 表格/输入/分页，`ReportChart.vue` 使用 ECharts SVG 图表，后端 `ReportingMapper.xml` 通过状态聚合与审计 LEFT JOIN 返回有界结果。图表实例在组件卸载时释放，日期缺失由服务层补零。
+
+文件练习的请求链为：`FilesPage → FormData → FileController → ImageNormalizer → FileService → AssetStorage → uploaded_file + audit_event`。所有者来自 Bearer 主体，前端没有 userId 授权入口。输入校验真实格式、2 MiB 大小、400 万像素，并重新编码去掉图片元数据；随机 key 与私有目录不向前端公开。
+
+`FileStorageConfig` 根据配置注入本地或 OSS 实现，演示同一业务对不同基础设施的依赖。数据库事务不能自动回滚文件，因此 FileService 注册事务完成回调，在失败后尝试删除对象；崩溃与清理失败仍需后续对账。
+
+`ObservedOperation` 与 `OperationTimingAspect` 演示 AOP：只输出固定动作名、成功状态和耗时，不输出请求参数或响应内容，也不承担身份授权。读取核心方法中的注释，再在正常上传和错误图片时观察差异。
+
+完整字段、接口、源码位置、OSS 配置与验证步骤见 [存储与报表练习](../storage-and-reports.md)。使用本地适配即可完成入门，不需要云账号；真实 OSS 需要另外核对地域、私有 Bucket、最小权限和凭据生命周期。V4 迁移建立上传元数据表，保留 V1–V3 的迁移内容和校验历史。
+
 ## 与上一版本的差异
 
 基于 V09 的项目快照升级，保留上一版目录。本版本只读取自己的 backend 与 frontend。
 
-本版的核心变化是：Flyway 按 V1、V2、V3 创建账户、刷新令牌、重置与审计表；不在启动时清表。ProductionGuard 拒绝缺少生产凭据、关闭 Secure Cookie 或非 MySQL 数据源的配置。
+本版的核心变化是：Flyway 按 V1–V4 创建账户、刷新令牌、重置、审计与上传元数据表；不在启动时清表。ProductionGuard 拒绝缺少生产凭据、关闭 Secure Cookie 或非 MySQL 数据源的配置。
 
 ## 局限与下一篇
 

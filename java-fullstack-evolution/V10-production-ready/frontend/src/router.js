@@ -13,6 +13,11 @@ export const router = createRouter({
     { path: '/register', component: RegisterPage },
     { path: '/account', component: AccountPage },
     { path: '/admin', component: AdminPage },
+    {
+      path: '/dashboard',
+      component: () => import('./pages/DashboardPage.vue'),
+    },
+    { path: '/files', component: () => import('./pages/FilesPage.vue') },
     { path: '/reset-password', component: ResetPage },
     { path: '/:pathMatch(.*)*', component: NotFound },
   ],

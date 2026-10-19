@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.*;
 import java.util.*;
 
+/** 访问令牌短期有效；刷新凭据只存摘要，通过条件更新保证一次消费。 */
 @Service
 public class TokenService {
     public record Access(String accessToken, long expiresIn, UserVO user) {}
@@ -48,6 +49,7 @@ public class TokenService {
 
     private Issued issue(Account user, String family) {
         accounts.active(user.getId());
+        // 原始随机凭据只发给浏览器；数据库泄露时摘要不能直接用于刷新。
         String raw = TokenSecrets.random();
         var row = new RefreshToken();
         row.setTokenHash(TokenSecrets.hash(raw));
@@ -85,6 +87,7 @@ public class TokenService {
         if (row == null) {
             throw invalid();
         }
+        // UPDATE 同时检查未消费、未撤销与有效期；并发请求中只有一次能更新成功。
         if (tokens.consume(hash, LocalDateTime.ofInstant(clock.instant(), ZoneOffset.UTC)) != 1) {
             tokens.revokeFamily(row.getFamilyId());
             throw invalid();

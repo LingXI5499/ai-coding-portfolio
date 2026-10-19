@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lingxi.evolution.mapper.FileMapper">
+    <sql id="columns">id, user_id, object_key, original_name, content_type, size, sha256, created_at</sql>
+    <!-- 对同一账户加行锁，防止并发上传绕过每人 20 张的学习配额。 -->
+    <select id="lockOwner" resultType="long">
+        SELECT id FROM app_user WHERE id = #{ownerId} AND status = 'ACTIVE' FOR UPDATE
+    </select>
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM uploaded_file WHERE user_id = #{ownerId}
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO uploaded_file(user_id, object_key, original_name, content_type, size, sha256)
+        VALUES(#{userId}, #{objectKey}, #{originalName}, #{contentType}, #{size}, #{sha256})
+    </insert>
+    <select id="findOwned" resultType="com.lingxi.evolution.entity.UploadedFile">
+        SELECT <include refid="columns"/> FROM uploaded_file
+        WHERE id = #{id} AND user_id = #{ownerId}
+    </select>
+    <select id="search" resultType="com.lingxi.evolution.entity.UploadedFile">
+        SELECT <include refid="columns"/> FROM uploaded_file
+        WHERE user_id = #{ownerId}
+        ORDER BY id DESC LIMIT #{query.pageSize} OFFSET #{query.offset}
+    </select>
+</mapper>

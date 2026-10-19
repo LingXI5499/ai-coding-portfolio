@@ -13,7 +13,7 @@
 | V07 | 真实表单过滤器、401/403、限流、ADMIN | 刷新 Session 保持身份、退出清除、安全链迁移 |
 | V08 | JWT 过期/篡改/畸形/缺声明、刷新过期、轮换/重放/并发 | 内存令牌、刷新恢复、Cookie CSRF 与注销 |
 | V09 | 资料越权、改密/重置一次性、过期、邮件失败、限流、全设备退出、禁用恢复、逻辑关联 | 本地邮件投递、账户软注销、管理员界面 |
-| V10 | 同 V09 + Flyway 空库与重复迁移、健康、OpenAPI、生产配置拒绝不安全值 | 打包 JAR、Vue 产物、CI、部署和恢复操作检查 |
+| V10 | 同 V09 + Flyway V1–V4、健康、OpenAPI、生产配置、文件所有权/配额/补偿、联表聚合、AOP 隐私日志、OSS 契约 | Element Plus、ECharts、图片上传预览、移动布局、CSP、JAR/前端产物、CI与部署检查 |
 
 ## 逐版命令
 
@@ -41,7 +41,7 @@ npm run build
 1. 确认版本目录正好 V01–V10，没有第十一个版本或聚合 POM。
 2. 每版单独复制到仓库之外可构建，不读取 sibling 源码。
 3. 检查 SQL 没有物理外键；关联字段有索引，服务拒绝不存在的用户关联；orphan-check.sql 返回空。
-4. 不提交 target、node_modules、dist、.local-mail、.env、application-local.yml、数据库文件、IDE 配置。
+4. 不提交 target、node_modules、dist、.local-mail、.local-uploads、.env、application-local.yml、数据库文件、IDE 配置。
 5. 注册响应不含哈希，数据库不含明文密码；SQL 注入字符串只作为参数值。
 6. Cookie 凭据写请求缺失/伪造 CSRF 返回 403，未认证读取返回 401，USER 访问管理员返回 403。
 7. JWT 必要声明、签名和过期均校验；重放刷新不复活，注销后不能刷新；全设备退出拒绝旧身份。

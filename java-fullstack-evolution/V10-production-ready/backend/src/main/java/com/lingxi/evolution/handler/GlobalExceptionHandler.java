@@ -12,6 +12,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.multipart.MultipartException;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 /** 错误不回显 SQL、凭据、请求体或异常消息。 */
@@ -28,11 +31,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({
         MethodArgumentNotValidException.class,
         HttpMessageNotReadableException.class,
-        MethodArgumentTypeMismatchException.class
+        MethodArgumentTypeMismatchException.class,
+        MissingServletRequestPartException.class,
+        MultipartException.class
     })
     public ResponseEntity<ApiResponse<Void>> invalid(Exception e) {
         return ResponseEntity.badRequest()
                 .body(ApiResponse.error("INVALID_INPUT", "请检查字段格式、长度与取值范围"));
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ApiResponse<Void>> tooLarge(Exception e) {
+        return ResponseEntity.status(413).body(ApiResponse.error("FILE_TOO_LARGE", "上传文件过大"));
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)

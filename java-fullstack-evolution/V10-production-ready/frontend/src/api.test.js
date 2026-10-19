@@ -1,6 +1,18 @@
 import { describe, it, expect } from 'vitest';
-import { api, csrf, login, clearCredentials } from './api';
+import { api, csrf, login, clearCredentials, setAccess } from './api';
 describe('HTTP 边界', () => {
+  it('私有文件保留 Blob，并通过请求头携带身份而不放入 URL', async () => {
+    const blob = new Blob(['image'], { type: 'image/png' });
+    setAccess('unit-test-access');
+    api.defaults.adapter = async (config) => {
+      expect(config.headers.Authorization).toBe('Bearer unit-test-access');
+      expect(config.url).toBe('/files/1/content');
+      return { status: 200, headers: {}, config, data: blob };
+    };
+    const result = await api.get('/files/1/content', { responseType: 'blob' });
+    expect(result).toBe(blob);
+    clearCredentials();
+  });
   it('写请求携带服务端 CSRF，读取不携带伪造令牌', async () => {
     const calls = [];
     api.defaults.adapter = async (config) => {

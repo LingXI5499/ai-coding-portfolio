@@ -34,6 +34,7 @@ public class AccountService {
         }
     }
 
+    /** 注册只采纳 DTO 允许的字段；密码经 BCrypt 哈希后入库，角色由服务端默认。 */
     @Transactional
     public Account register(RegisterRequest request) {
         validatePassword(request.password());
@@ -47,6 +48,7 @@ public class AccountService {
         return mapper.findById(user.getId());
     }
 
+    /** 对比自适应密码哈希；未知账户也执行一次占位哈希比较，降低时间差枚举风险。 */
     public Account verify(String username, String password) {
 
         var user = mapper.findByUsername(username);
@@ -73,6 +75,7 @@ public class AccountService {
         return mapper.findByUsername(username);
     }
 
+    /** 先核对当前密码，更新哈希并增加身份版本；后续请求将拒绝旧身份。 */
     @Transactional
     public void changePassword(long id, String current, String next) {
         var user = active(id);

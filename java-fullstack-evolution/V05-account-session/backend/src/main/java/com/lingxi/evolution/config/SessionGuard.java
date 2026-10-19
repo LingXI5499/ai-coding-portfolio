@@ -42,6 +42,7 @@ public class SessionGuard implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) {
         var session = req.getSession(false);
+        // Cookie 会自动随浏览器请求发送，写请求先做 CSRF 校验，注册与登录也受保护。
         if (!SAFE.contains(req.getMethod())) {
             String expected = session == null ? null : (String) session.getAttribute("CSRF");
             String actual = req.getHeader("X-CSRF-TOKEN");
@@ -58,6 +59,7 @@ public class SessionGuard implements HandlerInterceptor {
                 throw new ApiException(401, "UNAUTHENTICATED", "请先登录");
             }
             var user = accounts.active(id);
+            // 身份版本用于撤销已有会话；数据库中的账户状态是每次请求的最终依据。
             if (!user.getAuthVersion().equals(session.getAttribute("AUTH_VERSION"))) {
                 session.invalidate();
                 throw new ApiException(401, "UNAUTHENTICATED", "会话已失效");

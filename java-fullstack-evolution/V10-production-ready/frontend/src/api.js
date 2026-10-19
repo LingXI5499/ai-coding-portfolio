@@ -5,7 +5,9 @@ export const api = axios.create({
   withCredentials: true,
 });
 let csrfToken = '';
+// 访问令牌只在模块内存中保存；页面重载通过 HttpOnly 刷新 Cookie 恢复。
 let accessToken = '';
+// 并发 401 共享刷新 Promise，避免同一个一次性刷新凭据被重复消费。
 let refreshPending = null;
 export const setAccess = (token) => {
   accessToken = token || '';
@@ -38,7 +40,11 @@ api.interceptors.request.use((config) => {
   return config;
 });
 api.interceptors.response.use(
-  (response) => response.data.data,
+  // JSON API 解包 data；私有文件接口返回二进制，必须保留 Blob。
+  (response) =>
+    response.config?.responseType === 'blob'
+      ? response.data
+      : response.data.data,
   async (error) => {
     const config = error.config;
     if (

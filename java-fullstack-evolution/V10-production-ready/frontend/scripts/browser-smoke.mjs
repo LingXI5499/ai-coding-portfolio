@@ -315,6 +315,72 @@ async function account(page, context, origin, runtime, n) {
     403,
   );
   if (mysql && n >= 7) await adminQuery(page, username, n);
+  if (n === 10) {
+    await page.getByRole('link', { name: '文件练习', exact: true }).click();
+    await page.getByLabel('选择学习图片', { exact: true }).setInputFiles({
+      name: 'classroom.png',
+      mimeType: 'image/png',
+      buffer: await page.screenshot({
+        clip: { x: 0, y: 0, width: 2, height: 2 },
+      }),
+    });
+    await page.getByRole('button', { name: '上传图片', exact: true }).click();
+    await expect(
+      page.getByRole('status').filter({ hasText: '上传成功' }),
+    ).toBeVisible();
+    const uploadedRow = page.locator('tr').filter({ hasText: 'classroom.png' });
+    await uploadedRow
+      .getByRole('button', { name: '预览', exact: true })
+      .click();
+    const image = page.getByAltText('已上传图片预览');
+    await expect(image).toBeVisible();
+    await expect
+      .poll(() => image.evaluate((node) => node.naturalWidth))
+      .toBeGreaterThan(0);
+    await page.setViewportSize({ width: 390, height: 844 });
+    assert(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth + 1,
+      ),
+      'Files mobile page overflows',
+    );
+    await page.screenshot({
+      path: path.join(runtime, 'files-mobile.png'),
+      fullPage: true,
+    });
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    if (mysql) {
+      await page.getByRole('link', { name: '统计与审计', exact: true }).click();
+      await expect(
+        page.getByRole('img', { name: '账户状态分布' }).locator('svg'),
+      ).toBeVisible();
+      await expect(
+        page.getByRole('img', { name: '近七日审计事件趋势' }).locator('svg'),
+      ).toBeVisible();
+      await page.getByLabel('审计用户名关键字', { exact: true }).fill(username);
+      await page.getByLabel('审计操作', { exact: true }).fill('FILE_UPLOADED');
+      await page.getByRole('button', { name: '查询事件', exact: true }).click();
+      await expect(
+        page.locator('tr').filter({ hasText: 'FILE_UPLOADED' }),
+      ).toHaveCount(1);
+      await page.setViewportSize({ width: 390, height: 844 });
+      assert(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth + 1,
+        ),
+        'Dashboard mobile page overflows',
+      );
+      await page.screenshot({
+        path: path.join(runtime, 'dashboard-mobile.png'),
+        fullPage: true,
+      });
+      await page.setViewportSize({ width: 1440, height: 1000 });
+    }
+    await page.getByRole('link', { name: '我的账户', exact: true }).click();
+    await expect(
+      page.getByRole('button', { name: '保存资料', exact: true }),
+    ).toBeVisible();
+  }
 
   if (n >= 9) {
     await page.getByLabel('昵称', { exact: true }).fill('浏览器修改资料');
@@ -391,6 +457,25 @@ try {
     const context = await browser.newContext({
       viewport: { width: 1440, height: 1000 },
     });
+    if (n === 10) {
+      const nginx = await readFile(
+        path.join(project, 'deploy/nginx.conf'),
+        'utf8',
+      );
+      const policy = nginx.match(
+        /add_header Content-Security-Policy "([^"]+)"/,
+      )[1];
+      // 浏览器也使用交付配置中的 CSP，验证组件样式与私有 Blob 预览。
+      await context.route('**/*', async (route) => {
+        if (route.request().resourceType() !== 'document')
+          return route.continue();
+        const response = await route.fetch();
+        await route.fulfill({
+          response,
+          headers: { ...response.headers(), 'content-security-policy': policy },
+        });
+      });
+    }
     try {
       const backendPort = await freePort();
       const startBackend = () =>
@@ -413,7 +498,7 @@ try {
               ...process.env,
               ...(mysql
                 ? {
-                    DB_URL: `jdbc:mysql://127.0.0.1:3306/java_fullstack_v${String(n).padStart(2, '0')}?serverTimezone=UTC`,
+                    DB_URL: `jdbc:mysql://127.0.0.1:3306/java_fullstack_v${String(n).padStart(2, '0')}?connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true`,
                   }
                 : {}),
             },
@@ -453,6 +538,14 @@ try {
       const page = await context.newPage();
       const errors = [];
       page.on('pageerror', (error) => errors.push(error.message));
+      if (n === 10)
+        page.on('console', (message) => {
+          if (
+            message.type() === 'error' &&
+            message.text().includes('Content Security Policy')
+          )
+            errors.push(message.text());
+        });
       await page.goto(origin);
       const restart = async () => {
         await new Promise((resolve) => {

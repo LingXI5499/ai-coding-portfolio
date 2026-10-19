@@ -60,6 +60,9 @@ SQL 位于每版 `backend/src/main/resources/db/`；V10 在其中使用 `migrati
 
 ## 文档与验证
 
+- [从第一次运行到独立复现：入门路线](docs/beginner-roadmap.md)、[学习地图与代码覆盖](docs/technology-coverage.md)
+- [接口调试](docs/api-debugging.md)、[V10 图表、联表与上传](docs/storage-and-reports.md)、[Maven 工程化扩展](docs/engineering-extension.md)
+- [十版本总览博客：标题、摘要、标签、正文与安装附录](docs/publication/README.md)
 - [Windows + IDEA 环境安装](docs/environment-windows.md)
 - [架构与原理](docs/architecture.md)、[API 演进](docs/api-evolution.md)、[条件查询与分页](docs/query-and-pagination.md)
 - [安全模型](docs/security-model.md)、[生产部署](docs/deployment.md)

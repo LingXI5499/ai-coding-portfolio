@@ -20,6 +20,7 @@ describe('HTTP 边界', () => {
     await csrf();
     await api.post('/auth/register', {});
     expect(calls[1].headers['X-CSRF-TOKEN']).toBe('server-issued-token');
+    expect(calls[1].headers.Authorization).toBeUndefined();
     clearCredentials();
   });
   it('HTTP 失败与网络失败都转成用户提示', async () => {

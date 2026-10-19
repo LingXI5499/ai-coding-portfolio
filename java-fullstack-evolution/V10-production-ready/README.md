@@ -8,7 +8,7 @@
 
 基于 V09 的项目快照升级，保留上一版目录。本版本只读取自己的 backend 与 frontend。
 
-Flyway 按 V1、V2、V3 创建账户、刷新令牌、重置与审计表；不在启动时清表。ProductionGuard 拒绝缺少生产凭据、关闭 Secure Cookie 或非 MySQL 数据源的配置。
+Flyway 按 V1–V4 创建账户、刷新令牌、重置、审计与上传元数据表；不在启动时清表。ProductionGuard 拒绝缺少生产凭据、关闭 Secure Cookie 或非 MySQL 数据源的配置。综合练习还包含 Element Plus、ECharts、审计联表分页、私有图片上传、本地/OSS 存储适配与 AOP 耗时日志。
 
 本次开发依照用户补充要求：**JDK 17、backend/frontend 分离、全部逻辑外键、SQL 放在 resources 中**。
 
@@ -51,7 +51,7 @@ SHOW TABLES;
 cd backend
 java -version
 .\mvnw.cmd -v
-$env:DB_URL='jdbc:mysql://localhost:3306/java_fullstack_v10?serverTimezone=UTC'
+$env:DB_URL='jdbc:mysql://localhost:3306/java_fullstack_v10?connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true'
 $env:DB_USERNAME='lab'
 # DB_PASSWORD 通过 IDEA Run Configuration 或当前终端安全输入设置，勿写入仓库。
 .\mvnw.cmd test
@@ -121,6 +121,14 @@ JWT 登录响应包含 `data.accessToken`；受保护请求使用 `Authorization
 
 迁移不能靠删除 Flyway 历史表回滚。先备份数据库，验证恢复；优先前向修复，必要时恢复备份并回退到兼容旧模式的应用版本。
 
+## 综合练习入口
+
+登录后进入“文件练习”；ADMIN 还可以进入“统计与审计”。上传采用 Bearer + multipart，下载先校验所有权；图片限制为 PNG/JPEG、输入及重新编码后均不超过 2 MiB、400 万像素、每账户 20 张。默认 `.local-uploads/` 私有目录，不作为静态资源提供。
+
+存储可通过 FILES_STORAGE 选择 local 或 oss，变量模板见 `.env.example`。真实 OSS 需自行配置私有 Bucket 与最小权限 RAM 身份，云端尚需验收；本地无需云账户。报表按 UTC 自然日聚合，自定义 MySQL URL 应保留 `connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true`。
+
+源码、协议、事务补偿、云配置与手动验收见 [综合练习指南](../docs/storage-and-reports.md)。框架原理和练习顺序见 [入门路线](../docs/beginner-roadmap.md)。
+
 ## 下一版本
 
 本系列止于 V10。后续修复在本版内演进，不创建第十一个版本。
@@ -140,4 +148,4 @@ GET /api/admin/users?keyword=learner&status=ACTIVE&role=USER&page=1&pageSize=10
 
 页面提供查询、重置、上一页、下一页和每页条数。新筛选和切换大小回到第一页，删除或状态变更导致最后一页消失时自动退回有效页。API 升级需要调用方把列表读取改为 `page.records`，不能把分页对象当数组。
 
-实现、完整参数、SQL 原理与验收见 [条件分页指南](../docs/query-and-pagination.md)。本次不新增版本目录、不引入物理外键，也没有新增数据库表或迁移。
+实现、完整参数、SQL 原理与验收见 [条件分页指南](../docs/query-and-pagination.md)。条件分页本身复用原表；V10 上传功能另外通过 V4 迁移建立元数据表，所有关联仍不使用物理外键。

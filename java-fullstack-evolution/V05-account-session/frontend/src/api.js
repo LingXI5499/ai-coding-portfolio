@@ -4,19 +4,14 @@ export const api = axios.create({
   timeout: 10000,
   withCredentials: true,
 });
+// Session 身份由浏览器 Cookie 传递；前端只缓存服务端签发的 CSRF Token。
 let csrfToken = '';
-let accessToken = '';
-let refreshPending = null;
-export const setAccess = (token) => {
-  accessToken = token || '';
-};
 export async function csrf() {
   const data = await api.get('/auth/csrf');
   csrfToken = data.token;
   return data;
 }
 export function clearCredentials() {
-  accessToken = '';
   csrfToken = '';
 }
 api.interceptors.request.use((config) => {
@@ -28,8 +23,6 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response.data.data,
   async (error) => {
-    const config = error.config;
-
     throw new Error(
       error.response?.data?.message ||
         (error.response
@@ -44,9 +37,6 @@ export async function login(username, password) {
 
   await csrf();
   return result;
-}
-export async function refresh() {
-  return api.get('/auth/me');
 }
 export async function restore() {
   await csrf();
