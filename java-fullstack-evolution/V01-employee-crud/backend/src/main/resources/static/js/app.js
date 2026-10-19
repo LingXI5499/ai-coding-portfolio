@@ -1,3 +1,4 @@
+import { createEmployeeQueryControls } from './pagination.js';
 let editing = null;
 const form = document.querySelector('#employee-form');
 const list = document.querySelector('#list');
@@ -23,12 +24,23 @@ function reset() {
   form.reset();
   document.querySelector('#form-title').textContent = '新增员工';
 }
+const controls = createEmployeeQueryControls(
+  document.querySelector('#employee-filters'),
+  document.querySelector('#employee-pagination'),
+  load,
+);
 async function load() {
+  controls.setBusy(true);
   list.textContent = '正在加载…';
   try {
-    const rows = await request();
+    const data = await request('?' + controls.query());
+    if (controls.update(data)) {
+      await load();
+      return;
+    }
+    const rows = data.records;
     if (!rows.length) {
-      list.textContent = '还没有员工，使用下面的表单添加第一条记录。';
+      list.textContent = '没有符合条件的员工，请调整筛选或新增员工。';
       return;
     }
     const table = document.createElement('table');
@@ -80,6 +92,8 @@ async function load() {
   } catch (e) {
     list.textContent = '加载失败，请检查后端与数据库。';
     notify(e.message, true);
+  } finally {
+    controls.setBusy(false);
   }
 }
 form.onsubmit = async (event) => {

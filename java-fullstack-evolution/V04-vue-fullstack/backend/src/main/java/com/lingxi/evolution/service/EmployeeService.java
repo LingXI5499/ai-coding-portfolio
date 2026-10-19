@@ -1,11 +1,11 @@
 package com.lingxi.evolution.service;
 
 import com.lingxi.evolution.entity.Employee;
-
-import java.util.List;
+import com.lingxi.evolution.pagination.PageResult;
+import com.lingxi.evolution.query.EmployeeQuery;
 
 public interface EmployeeService {
-    List<Employee> list();
+    PageResult<Employee> list(EmployeeQuery query);
 
     Employee find(long id);
 

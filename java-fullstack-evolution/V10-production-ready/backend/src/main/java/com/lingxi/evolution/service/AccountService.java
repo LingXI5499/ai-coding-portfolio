@@ -4,6 +4,8 @@ import com.lingxi.evolution.dto.RegisterRequest;
 import com.lingxi.evolution.entity.Account;
 import com.lingxi.evolution.exception.ApiException;
 import com.lingxi.evolution.mapper.AccountMapper;
+import com.lingxi.evolution.pagination.PageResult;
+import com.lingxi.evolution.query.UserQuery;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -123,7 +125,9 @@ public class AccountService {
         mapper.invalidate(id);
     }
 
-    public List<Account> list() {
-        return mapper.list();
+    @Transactional(readOnly = true)
+    public PageResult<Account> list(UserQuery query) {
+        long total = mapper.count(query);
+        return PageResult.of(total == 0 ? List.of() : mapper.search(query), total, query);
     }
 }

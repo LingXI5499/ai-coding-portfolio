@@ -1,12 +1,14 @@
 package com.lingxi.evolution.controller;
 
 import com.lingxi.evolution.entity.Employee;
+import com.lingxi.evolution.pagination.PageResult;
+import com.lingxi.evolution.query.EmployeeQuery;
 import com.lingxi.evolution.service.EmployeeService;
+
+import jakarta.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/employees")
@@ -18,8 +20,8 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public List<Employee> list() {
-        return service.list();
+    public PageResult<Employee> list(@Valid @ModelAttribute EmployeeQuery query) {
+        return service.list(query);
     }
 
     @GetMapping("/{id}")

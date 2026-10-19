@@ -1,5 +1,12 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { fetchRequest, xhrRequest, axiosRequest, api } from './clients';
+const paged = {
+  records: [{ id: 1 }],
+  total: 21,
+  page: 2,
+  pageSize: 10,
+  totalPages: 3,
+};
 afterEach(() => vi.unstubAllGlobals());
 describe('HTTP 客户端', () => {
   it('Fetch 检查 HTTP 错误，不把 400 当成功', async () => {
@@ -27,9 +34,32 @@ describe('HTTP 客户端', () => {
       config,
       status: 200,
       headers: {},
-      data: { data: [{ id: 1 }] },
+      data: { data: paged },
     });
-    await expect(axiosRequest('/api/employees')).resolves.toEqual([{ id: 1 }]);
+    await expect(axiosRequest('/api/employees?page=2')).resolves.toEqual(paged);
+  });
+  it('Fetch 保留分页元数据', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi
+        .fn()
+        .mockResolvedValue({ ok: true, json: async () => ({ data: paged }) }),
+    );
+    await expect(fetchRequest('/api/employees?page=2')).resolves.toEqual(paged);
+  });
+  it('XHR 成功时保留分页元数据', async () => {
+    class FakeXHR {
+      open() {}
+      setRequestHeader() {}
+      send() {
+        this.status = 200;
+        this.responseText = JSON.stringify({ data: paged });
+        this.onload();
+        this.onloadend();
+      }
+    }
+    vi.stubGlobal('XMLHttpRequest', FakeXHR);
+    await expect(xhrRequest('/api/employees?page=2')).resolves.toEqual(paged);
   });
   it('XHR 回调转换 Promise 并拒绝非 2xx', async () => {
     class FakeXHR {

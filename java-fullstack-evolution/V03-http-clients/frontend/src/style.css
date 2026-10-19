@@ -416,3 +416,55 @@ code {
   overflow-wrap: anywhere;
   text-align: right;
 }
+
+.query-form {
+  margin: 0 0 24px;
+}
+.filter-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+}
+.query-form .actions {
+  margin-top: 14px;
+}
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #e4ebe3;
+}
+.pagination p {
+  margin: 0;
+  color: #637771;
+  font-size: 13px;
+}
+.pagination .actions {
+  margin: 0;
+}
+.pagination label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+.pagination select {
+  width: 80px;
+  padding: 7px 10px;
+}
+.pagination button {
+  padding: 8px 12px;
+}
+@media (max-width: 650px) {
+  .pagination {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .pagination .actions {
+    gap: 8px;
+  }
+}

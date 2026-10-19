@@ -76,7 +76,7 @@ Content-Type: application/json
 
 {"name":"教学员工","gender":"未说明","age":25,"phone":"","department":"研发部","salary":8000}
 ```
-后续 GET `/api/employees/{id}`、PUT 同路径、DELETE 同路径。列表最多返回 200 条。
+后续 GET `/api/employees/{id}`、PUT 同路径、DELETE 同路径。列表改为真正的数据库条件分页，默认第 1 页、每页 10 条，最多 100 条。
 
 ## 验收步骤
 
@@ -106,3 +106,18 @@ Content-Type: application/json
 V03：同一个 API：XHR、Fetch 与 Axios
 
 教程：[V02 文章草稿](../docs/articles/V02-api-contract.md)。完整安全边界见 [security-model.md](../docs/security-model.md)。
+
+
+## 条件查询与分页补充
+
+员工列表按姓名、部门做包含查询，支持性别精确筛选与年龄区间；条件按 AND 组合。
+
+```http
+GET /api/employees?name=张&department=研发&minAge=25&maxAge=40&page=1&pageSize=10
+```
+
+列表不再返回固定上限 200 条的数组，改为 `records/total/page/pageSize/totalPages` 分页对象。V01 直接返回该对象；V02 起位于 `ApiResponse.data`。默认 page=1、pageSize=10，单页最多 100。`total` 来自相同过滤条件的 COUNT，空结果 totalPages=0；越界的合法页返回空 records，非法参数返回 400。
+
+页面提供查询、重置、上一页、下一页和每页条数。新筛选和切换大小回到第一页，删除或状态变更导致最后一页消失时自动退回有效页。API 升级需要调用方把列表读取改为 `page.records`，不能把分页对象当数组。
+
+实现、完整参数、SQL 原理与验收见 [条件分页指南](../docs/query-and-pagination.md)。本次不新增版本目录、不引入物理外键，也没有新增数据库表或迁移。

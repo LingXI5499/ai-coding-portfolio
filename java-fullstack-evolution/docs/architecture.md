@@ -16,7 +16,7 @@ flowchart LR
 
 Controller 做 HTTP 参数绑定、校验和响应，Service 实现业务决策及事务，Mapper 做数据访问。V01 的 EmployeeService 接口与实现对应最初教学结构；账户版本使用单一 AccountService，不为简单服务人为增加无收益接口。MailGateway 是适配器接口，因为开发文件投递和生产 SMTP 确实有不同实现。
 
-V01 直接返回员工实体，V02 起使用 DTO/VO 与统一响应；账户实体中的 passwordHash、authVersion 不对外暴露。Jackson 拒绝未知输入字段，个人资料 API 不接受目标用户 ID。列表上限为 200，本系列没有实现大规模分页和搜索。
+V01 直接返回员工实体，V02 起使用 DTO/VO 与统一响应；账户实体中的 passwordHash、authVersion 不对外暴露。Jackson 拒绝未知输入字段，个人资料 API 不接受目标用户 ID。员工列表（V01–V04）与管理员列表（V07–V10）支持数据库条件分页，默认每页 10 条、最多 100 条；COUNT 与当前页使用相同动态 WHERE，按 id 升序保持稳定顺序。
 
 ## 十版的实际变化
 

@@ -1,6 +1,6 @@
 # API 演进与契约
 
-V01 直接返回员工对象/数组，创建 201，删除 204。V02 起成功与失败使用相同 envelope：`code, message, data, traceId`。SUCCESS 的 data 是公开 VO；失败 data=null。统一结构不覆盖协议状态码。
+V01 的单条接口直接返回员工对象，列表返回分页对象，创建 201，删除 204。V02 起成功与失败使用相同 envelope：`code, message, data, traceId`。SUCCESS 的 data 是公开 VO；失败 data=null。统一结构不覆盖协议状态码。
 
 | 状态 | 含义 |
 | --- | --- |
@@ -17,7 +17,7 @@ V01 直接返回员工对象/数组，创建 201，删除 204。V02 起成功与
 
 | Method / 路径 | 输入 | 输出与失败 |
 | --- | --- | --- |
-| GET /api/employees | 无 | 最多 200 条员工；空数组 |
+| GET /api/employees | name/department/gender/minAge/maxAge/page/pageSize | 分页对象；V01 直接返回，V02 起放在 data；非法参数 400 |
 | GET /api/employees/{id} | 整数 ID | 员工，缺失 404 |
 | POST /api/employees | name, gender, age, phone, department, salary | 201；V02 起 400 校验 |
 | PUT /api/employees/{id} | 同创建字段 | 更新后的员工；404 |
@@ -37,7 +37,7 @@ V03 的三种客户端保留同一路径。V04 升级为 Vue，但不改变 API�
 | V05 | GET /api/auth/me | Session 或 Bearer | UserVO，缺失身份 401 |
 | V05 | POST /api/auth/logout | Session/Refresh Cookie + CSRF | 当前设备退出 |
 | V06 | POST /api/auth/password | currentPassword/newPassword + 已认证身份 | 改密并撤销旧身份；Session 版本还需 CSRF |
-| V07 | GET /api/admin/users | ADMIN | 最多 200 个 UserVO，USER 返回 403 |
+| V07 | GET /api/admin/users | ADMIN；keyword/status/role/page/pageSize | UserVO 分页对象，USER 返回 403；V08–V10 保留 |
 | V08 | POST /api/auth/refresh | Refresh Cookie + CSRF | 轮换 Cookie 与新的 accessToken/expiresIn/user |
 
 用户名 `[a-z0-9_]{3,32}`；昵称 1–50；密码 12–64 字符且 UTF-8 不超过 72 字节；邮箱可选，最多 254。UserVO 包含 id/username/nickname/email/status/role，不含密码哈希与身份版本。
@@ -53,7 +53,14 @@ V07 的登录由 Spring Security 表单过滤器处理，使用 `application/x-w
 | DELETE /api/account | 无 | 当前主体；软注销、撤销凭据，保留用户父行与审计 |
 | POST /api/auth/forgot-password | username | CSRF；统一响应；如可用则发送重置邮件 |
 | POST /api/auth/reset-password | token, newPassword | CSRF；15 分钟/一次使用；无效 400，限流 429 |
-| GET /api/admin/users | 无 | ADMIN；列表不返回哈希 |
+| GET /api/admin/users | keyword/status/role/page/pageSize | ADMIN；分页 records 不返回哈希 |
 | PATCH /api/admin/users/{id}/status | status=ACTIVE/DISABLED | ADMIN，禁止修改自身；缺失 404 |
 
 `/api/account/profile/{其他用户ID}` 不存在，不能把 URL 改成别人的 ID 越权。V10 通过 `/v3/api-docs` 提供可查看的 OpenAPI JSON、`/swagger-ui/index.html` 提供本机 Swagger；生产 profile 禁用。`/actuator/health` 仅暴露状态。
+
+
+## 条件分页参数与迁移
+
+员工 name/department 为包含查询，gender 为精确匹配，minAge/maxAge 为 18–70 的闭区间；管理员 keyword 匹配 username 或 nickname，status 和 role 精确匹配。page 默认 1，范围 1–1000000；pageSize 默认 10，范围 1–100。空白文本忽略，非法参数返回 400。详见 [条件分页指南](query-and-pagination.md)。
+
+这是对旧数组列表的契约升级：V01 读取 response.records，V02 起读取 response.data.records；三种 HTTP 客户端演示和 Vue 页面已同步升级。

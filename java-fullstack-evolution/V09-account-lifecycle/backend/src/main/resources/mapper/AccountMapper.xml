@@ -14,10 +14,29 @@
         <include refid="columns"/>
          FROM app_user WHERE id=#{id}
     </select>
-    <select id="list" resultType="com.lingxi.evolution.entity.Account">
-        SELECT
-        <include refid="columns"/>
-         FROM app_user ORDER BY id LIMIT 200
+    <sql id="queryConditions">
+        <where>
+            <if test="query.keyword != null">
+                AND (username LIKE #{query.keywordPattern} ESCAPE '!'
+                    OR nickname LIKE #{query.keywordPattern} ESCAPE '!')
+            </if>
+            <if test="query.status != null">
+                AND status = #{query.status}
+            </if>
+            <if test="query.role != null">
+                AND role = #{query.role}
+            </if>
+        </where>
+    </sql>
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM app_user
+        <include refid="queryConditions"/>
+    </select>
+    <select id="search" resultType="com.lingxi.evolution.entity.Account">
+        SELECT <include refid="columns"/> FROM app_user
+        <include refid="queryConditions"/>
+        ORDER BY id ASC
+        LIMIT #{query.pageSize} OFFSET #{query.offset}
     </select>
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">INSERT INTO app_user(username,password_hash,nickname,email) VALUES(#{username},#{passwordHash},#{nickname},#{email})</insert>
     <update id="password">UPDATE app_user SET password_hash=#{hash}, auth_version=auth_version+1, updated_at=CURRENT_TIMESTAMP WHERE id=#{id}</update>

@@ -124,7 +124,7 @@ class LifecycleIntegrationTest {
         assertThat(
                         jdbc.queryForObject(
                                 "SELECT COUNT(*) FROM password_reset WHERE user_id=? AND"
-                                    + " used=FALSE",
+                                        + " used=FALSE",
                                 Integer.class,
                                 id))
                 .isZero();
@@ -215,20 +215,20 @@ class LifecycleIntegrationTest {
         assertThat(
                         jdbc.queryForObject(
                                 "SELECT COUNT(*) FROM refresh_token r LEFT JOIN app_user u ON"
-                                    + " u.id=r.user_id WHERE u.id IS NULL",
+                                        + " u.id=r.user_id WHERE u.id IS NULL",
                                 Integer.class))
                 .isZero();
         assertThat(
                         jdbc.queryForObject(
                                 "SELECT COUNT(*) FROM password_reset r LEFT JOIN app_user u ON"
-                                    + " u.id=r.user_id WHERE u.id IS NULL",
+                                        + " u.id=r.user_id WHERE u.id IS NULL",
                                 Integer.class))
                 .isZero();
         assertThat(
                         jdbc.queryForObject(
                                 "SELECT COUNT(*) FROM audit_event a LEFT JOIN app_user u ON"
-                                    + " u.id=a.user_id WHERE a.user_id IS NOT NULL AND u.id IS"
-                                    + " NULL",
+                                        + " u.id=a.user_id WHERE a.user_id IS NOT NULL AND u.id IS"
+                                        + " NULL",
                                 Integer.class))
                 .isZero();
     }

@@ -1,3 +1,4 @@
+import { createEmployeeQueryControls } from './pagination.js';
 import './style.css';
 import { xhrRequest, fetchRequest, axiosRequest } from './clients';
 const clients = {
@@ -6,7 +7,7 @@ const clients = {
   Axios: axiosRequest,
 };
 document.querySelector('#app').innerHTML =
-  `<div class="shell"><aside class="sidebar"><a class="brand" href="/"><span class="brand-mark">J</span>进化实验室</a><small>JAVA FULL-STACK / V03</small><div class="sidebar-foot">同一个 API，三种客户端。<br>观察浏览器中的异步请求。</div></aside><main class="workspace"><header class="topbar"><span>实验室 / HTTP 客户端</span><span class="badge">XHR · Fetch · Axios</span></header><div class="intro"><div><div class="eyebrow">EXPERIMENT 03 / HTTP CLIENTS</div><h1>一次请求，三种写法。</h1><p>Ajax 是异步交互模式。下面的客户端调用相同的员工 API，比较响应、错误与取消行为。</p></div></div><section class="card"><h2>新增请求数据</h2><form id="employee" class="form-grid"><label>姓名<input name="name" value="教学员工" required></label><label>部门<input name="department" value="研发部" required></label><label>年龄<input name="age" type="number" value="25" min="18" max="70"></label><label>月薪<input name="salary" type="number" value="8000" min="0" step=".01"></label></form><p class="caption">点击任一客户端的“新增”按钮，使用同一份表单数据；“400”提交缺少字段的请求，“断网”访问不可连接的测试端口。</p></section><div class="client-row" id="clients"></div><section class="card"><div class="toolbar"><h2>员工工作台 · Axios</h2><button id="reload">刷新列表</button></div><div id="business" class="table-wrap"></div><p id="business-error" role="status"></p></section></main></div>`;
+  `<div class="shell"><aside class="sidebar"><a class="brand" href="/"><span class="brand-mark">J</span>进化实验室</a><small>JAVA FULL-STACK / V03</small><div class="sidebar-foot">同一个 API，三种客户端。<br>观察浏览器中的异步请求。</div></aside><main class="workspace"><header class="topbar"><span>实验室 / HTTP 客户端</span><span class="badge">XHR · Fetch · Axios</span></header><div class="intro"><div><div class="eyebrow">EXPERIMENT 03 / HTTP CLIENTS</div><h1>一次请求，三种写法。</h1><p>Ajax 是异步交互模式。下面的客户端调用相同的员工 API，比较响应、错误与取消行为。</p></div></div><section class="card"><h2>新增请求数据</h2><form id="employee" class="form-grid"><label>姓名<input name="name" value="教学员工" required></label><label>部门<input name="department" value="研发部" required></label><label>年龄<input name="age" type="number" value="25" min="18" max="70"></label><label>月薪<input name="salary" type="number" value="8000" min="0" step=".01"></label></form><p class="caption">点击任一客户端的“新增”按钮，使用同一份表单数据；“400”提交缺少字段的请求，“断网”访问不可连接的测试端口。</p></section><div class="client-row" id="clients"></div><section class="card"><div class="toolbar"><h2>员工工作台 · Axios</h2><button id="reload">刷新列表</button></div><div id="employee-filters"></div><div id="business" class="table-wrap"></div><nav id="employee-pagination"></nav><p id="business-error" role="status"></p></section></main></div>`;
 const controllers = {};
 function body() {
   const data = Object.fromEntries(
@@ -50,7 +51,9 @@ for (const [name, request] of Object.entries(clients)) {
         const data = await request(
           action === '断网'
             ? 'http://127.0.0.1:1/unreachable'
-            : '/api/employees',
+            : action === '查询'
+              ? '/api/employees?' + controls.query()
+              : '/api/employees',
           ['新增', '400'].includes(action) ? 'POST' : 'GET',
           action === '新增' ? body() : action === '400' ? {} : undefined,
           controller.signal,
@@ -68,15 +71,26 @@ for (const [name, request] of Object.entries(clients)) {
   card.append(actions, output);
   document.querySelector('#clients').append(card);
 }
+const controls = createEmployeeQueryControls(
+  document.querySelector('#employee-filters'),
+  document.querySelector('#employee-pagination'),
+  load,
+);
 async function load() {
+  controls.setBusy(true);
   const root = document.querySelector('#business'),
     error = document.querySelector('#business-error');
   root.textContent = '正在加载…';
   error.textContent = '';
   try {
-    const rows = await axiosRequest('/api/employees');
+    const data = await axiosRequest('/api/employees?' + controls.query());
+    if (controls.update(data)) {
+      await load();
+      return;
+    }
+    const rows = data.records;
     if (!rows.length) {
-      root.textContent = '暂无员工';
+      root.textContent = '没有符合条件的员工';
       return;
     }
     const table = document.createElement('table');
@@ -122,6 +136,8 @@ async function load() {
   } catch (e) {
     root.textContent = '加载失败';
     error.textContent = e.message;
+  } finally {
+    controls.setBusy(false);
   }
 }
 document.querySelector('#reload').onclick = load;

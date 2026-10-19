@@ -1,6 +1,8 @@
 package com.lingxi.evolution.controller;
 
 import com.lingxi.evolution.dto.StatusRequest;
+import com.lingxi.evolution.pagination.PageResult;
+import com.lingxi.evolution.query.UserQuery;
 import com.lingxi.evolution.service.*;
 import com.lingxi.evolution.vo.*;
 
@@ -9,8 +11,6 @@ import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin/users")
@@ -24,8 +24,8 @@ public class AdminController {
     }
 
     @GetMapping
-    public ApiResponse<List<UserVO>> list() {
-        return ApiResponse.ok(accounts.list().stream().map(UserVO::from).toList());
+    public ApiResponse<PageResult<UserVO>> list(@Valid @ModelAttribute UserQuery query) {
+        return ApiResponse.ok(accounts.list(query).map(UserVO::from));
     }
 
     @PatchMapping("/{id}/status")

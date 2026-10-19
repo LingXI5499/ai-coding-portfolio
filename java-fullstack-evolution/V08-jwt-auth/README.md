@@ -125,3 +125,18 @@ Cookie 端点使用独立的 CSRF 过滤链；Bearer API 只接受 Authorization
 V09：账户生命周期与权限边界
 
 教程：[V08 文章草稿](../docs/articles/V08-jwt-auth.md)。完整安全边界见 [security-model.md](../docs/security-model.md)。
+
+
+## 条件查询与分页补充
+
+管理员列表按用户名或昵称关键字查询，并组合账户状态、角色筛选；查询参数不会替代 ADMIN 权限。
+
+```http
+GET /api/admin/users?keyword=learner&status=ACTIVE&role=USER&page=1&pageSize=10
+```
+
+列表不再返回固定上限 200 条的数组，改为 `records/total/page/pageSize/totalPages` 分页对象。V01 直接返回该对象；V02 起位于 `ApiResponse.data`。默认 page=1、pageSize=10，单页最多 100。`total` 来自相同过滤条件的 COUNT，空结果 totalPages=0；越界的合法页返回空 records，非法参数返回 400。
+
+页面提供查询、重置、上一页、下一页和每页条数。新筛选和切换大小回到第一页，删除或状态变更导致最后一页消失时自动退回有效页。API 升级需要调用方把列表读取改为 `page.records`，不能把分页对象当数组。
+
+实现、完整参数、SQL 原理与验收见 [条件分页指南](../docs/query-and-pagination.md)。本次不新增版本目录、不引入物理外键，也没有新增数据库表或迁移。

@@ -4,10 +4,34 @@
   'https://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace="com.lingxi.evolution.mapper.EmployeeMapper">
     <sql id="columns">id, name, gender, age, phone, department, salary, create_time, update_time</sql>
-    <select id="findAll" resultType="com.lingxi.evolution.entity.Employee">
-        SELECT
-        <include refid="columns"/>
-         FROM employee ORDER BY id LIMIT 200
+    <sql id="queryConditions">
+        <where>
+            <if test="query.name != null">
+                AND name LIKE #{query.namePattern} ESCAPE '!'
+            </if>
+            <if test="query.department != null">
+                AND department LIKE #{query.departmentPattern} ESCAPE '!'
+            </if>
+            <if test="query.gender != null">
+                AND gender = #{query.gender}
+            </if>
+            <if test="query.minAge != null">
+                AND age &gt;= #{query.minAge}
+            </if>
+            <if test="query.maxAge != null">
+                AND age &lt;= #{query.maxAge}
+            </if>
+        </where>
+    </sql>
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM employee
+        <include refid="queryConditions"/>
+    </select>
+    <select id="search" resultType="com.lingxi.evolution.entity.Employee">
+        SELECT <include refid="columns"/> FROM employee
+        <include refid="queryConditions"/>
+        ORDER BY id ASC
+        LIMIT #{query.pageSize} OFFSET #{query.offset}
     </select>
     <select id="findById" resultType="com.lingxi.evolution.entity.Employee">
         SELECT

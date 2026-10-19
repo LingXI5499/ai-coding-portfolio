@@ -1,27 +1,34 @@
 <script setup>
-  import { ref, onMounted } from 'vue';
+  import { onMounted } from 'vue';
   import { api } from '../api';
-  const employees = ref([]),
-    loading = ref(false),
-    error = ref('');
-  async function load() {
-    loading.value = true;
-    error.value = '';
-    try {
-      employees.value = await api.get('/employees');
-    } catch (e) {
-      error.value = e.message;
-    } finally {
-      loading.value = false;
-    }
-  }
+  import ListPager from '../components/ListPager.vue';
+  import { usePagedList } from '../composables/usePagedList';
+  const {
+    records: employees,
+    loading,
+    error,
+    filters,
+    pagination,
+    hasFilters,
+    load,
+    search,
+    reset,
+    changePage,
+    changePageSize,
+  } = usePagedList('/employees', {
+    name: '',
+    department: '',
+    gender: '',
+    minAge: '',
+    maxAge: '',
+  });
   async function remove(employee) {
     if (!confirm(`删除 ${employee.name}？`)) return;
     try {
       await api.delete(`/employees/${employee.id}`);
       await load();
-    } catch (e) {
-      error.value = e.message;
+    } catch (failure) {
+      error.value = failure.message;
     }
   }
   onMounted(load);
@@ -32,7 +39,7 @@
     <div class="toolbar">
       <h2>
         员工名册
-        <small>{{ employees.length }} 人</small>
+        <small>共 {{ pagination.total }} 人</small>
       </h2>
       <div class="actions">
         <button class="secondary" :disabled="loading" @click="load">
@@ -41,9 +48,71 @@
         <RouterLink class="button" to="/employees/new">添加员工</RouterLink>
       </div>
     </div>
+    <form class="query-form" @submit.prevent="search">
+      <div class="filter-fields">
+        <label>
+          姓名关键字
+          <input
+            v-model.trim="filters.name"
+            maxlength="50"
+            placeholder="姓名包含…"
+          />
+        </label>
+        <label>
+          部门关键字
+          <input
+            v-model.trim="filters.department"
+            maxlength="100"
+            placeholder="部门包含…"
+          />
+        </label>
+        <label>
+          性别筛选
+          <select aria-label="性别筛选" v-model="filters.gender">
+            <option value="">全部</option>
+            <option>未说明</option>
+            <option>男</option>
+            <option>女</option>
+          </select>
+        </label>
+        <label>
+          最小年龄
+          <input
+            v-model.number="filters.minAge"
+            type="number"
+            min="18"
+            max="70"
+          />
+        </label>
+        <label>
+          最大年龄
+          <input
+            v-model.number="filters.maxAge"
+            type="number"
+            min="18"
+            max="70"
+          />
+        </label>
+      </div>
+      <div class="actions">
+        <button :disabled="loading">查询</button>
+        <button
+          type="button"
+          class="secondary"
+          :disabled="loading"
+          @click="reset"
+        >
+          重置筛选
+        </button>
+      </div>
+    </form>
     <div v-if="loading" class="empty" role="status">正在加载员工…</div>
     <div v-else-if="!employees.length" class="empty">
-      还没有员工，添加第一条记录开始实验。
+      {{
+        hasFilters
+          ? '没有符合条件的员工，请调整筛选条件。'
+          : '还没有员工，添加第一条记录开始实验。'
+      }}
     </div>
     <div v-else class="table-wrap">
       <table>
@@ -71,7 +140,11 @@
                 <RouterLink :to="`/employees/${employee.id}/edit`">
                   编辑
                 </RouterLink>
-                <button class="secondary" @click="remove(employee)">
+                <button
+                  class="secondary"
+                  :disabled="loading"
+                  @click="remove(employee)"
+                >
                   删除
                 </button>
               </div>
@@ -80,5 +153,11 @@
         </tbody>
       </table>
     </div>
+    <ListPager
+      v-bind="pagination"
+      :loading="loading"
+      @page="changePage"
+      @page-size="changePageSize"
+    />
   </section>
 </template>

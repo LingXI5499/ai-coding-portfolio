@@ -31,8 +31,8 @@ XHR timeout 和 AbortController 都是客户端取消，不能保证已经提交
 真实文件：[`V03-http-clients/backend/src/main/java/com/lingxi/evolution/controller/EmployeeController.java`](../../V03-http-clients/backend/src/main/java/com/lingxi/evolution/controller/EmployeeController.java)。下面节选真实实现，完整方法与其依赖请沿链接阅读。
 
 ```java
-    public ApiResponse<List<EmployeeVO>> list() {
-        return ApiResponse.ok(service.list().stream().map(EmployeeVO::from).toList());
+    public ApiResponse<PageResult<EmployeeVO>> list(@Valid @ModelAttribute EmployeeQuery query) {
+        return ApiResponse.ok(service.list(query).map(EmployeeVO::from));
     }
 ```
 
@@ -101,3 +101,14 @@ npm run dev  # 前端端口 5173，API 代理到 8083
 - [Vue 工具链](https://vuejs.org/guide/scaling-up/tooling)
 
 更多对应版本参考见 [references.md](../references.md)。
+
+
+## 补充实战：条件查询与分页
+
+本版员工名册已从固定截断列表升级为数据库分页。查询参数封装在 [`EmployeeQuery.java`](../../V03-http-clients/backend/src/main/java/com/lingxi/evolution/query/EmployeeQuery.java)，动态条件与计数实现在 [`EmployeeMapper.xml`](../../V03-http-clients/backend/src/main/resources/mapper/EmployeeMapper.xml)。两者在本版目录内完整保留。
+
+先按筛选条件执行 COUNT，再读取 LIMIT/OFFSET 当前页；前端只渲染 `records`，分页控件读取 total 与 totalPages。搜索和切换每页条数都回到第 1 页，空结果与超出最后一页有明确行为。
+
+学习时至少验证：组合条件、第一页/下一页、每页 5/10/100 条、空结果、越界页、非法 pageSize，以及 `%`/`_` 按普通字符搜索。服务端集成测试还覆盖 205 条记录，证明可以查到旧版 200 条截断范围之外的数据。
+
+API 的列表返回结构发生变化，调用方必须从 `page.records` 读取行数据。完整原理、请求例子、响应 JSON、真实路径与手动步骤见 [条件分页指南](../query-and-pagination.md)。此项补充不增加第十一个版本。

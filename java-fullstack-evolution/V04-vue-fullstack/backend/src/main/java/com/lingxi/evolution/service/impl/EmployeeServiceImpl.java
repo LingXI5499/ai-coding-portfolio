@@ -2,6 +2,8 @@ package com.lingxi.evolution.service.impl;
 
 import com.lingxi.evolution.entity.Employee;
 import com.lingxi.evolution.mapper.EmployeeMapper;
+import com.lingxi.evolution.pagination.PageResult;
+import com.lingxi.evolution.query.EmployeeQuery;
 import com.lingxi.evolution.service.EmployeeService;
 
 import org.springframework.stereotype.Service;
@@ -17,8 +19,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.mapper = mapper;
     }
 
-    public List<Employee> list() {
-        return mapper.findAll();
+    @Transactional(readOnly = true)
+    public PageResult<Employee> list(EmployeeQuery query) {
+        long total = mapper.count(query);
+        return PageResult.of(total == 0 ? List.of() : mapper.search(query), total, query);
     }
 
     public Employee find(long id) {

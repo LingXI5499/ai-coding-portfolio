@@ -1,8 +1,10 @@
 package com.lingxi.evolution.mapper;
 
 import com.lingxi.evolution.entity.Account;
+import com.lingxi.evolution.query.UserQuery;
 
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,5 +25,7 @@ public interface AccountMapper {
 
     int invalidate(long id);
 
-    List<Account> list();
+    long count(@Param("query") UserQuery query);
+
+    List<Account> search(@Param("query") UserQuery query);
 }

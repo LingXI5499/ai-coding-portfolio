@@ -61,7 +61,7 @@ SQL 位于每版 `backend/src/main/resources/db/`；V10 在其中使用 `migrati
 ## 文档与验证
 
 - [Windows + IDEA 环境安装](docs/environment-windows.md)
-- [架构与原理](docs/architecture.md)、[API 演进](docs/api-evolution.md)
+- [架构与原理](docs/architecture.md)、[API 演进](docs/api-evolution.md)、[条件查询与分页](docs/query-and-pagination.md)
 - [安全模型](docs/security-model.md)、[生产部署](docs/deployment.md)
 - [验收清单](docs/acceptance-checklist.md)、[真实验证记录](docs/verification.md)
 - [十篇文章索引](docs/articles/README.md)、[官方资料](docs/references.md)
